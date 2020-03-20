@@ -1,0 +1,33 @@
+### Configuration File for CIBR-FLARE Project
+
+# If no value is entered for a key, the default value will be applied.
+
+# General settings will be overwritten by container settings if different.
+
+## General Settings
+shared-directory          : /opt/flare
+app-directory             : # /root/flare (default)
+ssh-key:
+  public                  : 
+  private                 : 
+git:
+  remote:
+    server                : # github.com (default)
+    branch                : # test1 (default)
+    user:
+      name                :
+      email               :
+        
+## flare-push-test Container Settings
+flare-push-test:
+  git:
+    ssh-key:
+      public              :
+      private             :
+    remote:
+      server              : github.com
+      repository          : careylabvt/flare-containers.git
+      branch              : test2
+      user:
+        name              :
+        email             :
