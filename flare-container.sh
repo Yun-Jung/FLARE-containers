@@ -49,7 +49,7 @@ git config --global user.name $GIT_REMOTE_USER_NAME
 git config --global user.email $GIT_REMOTE_USER_EMAIL
 
 # Clone git repository if it doesn't exist
-[ -f $GIT_DIRECTORY ] && git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY
+[ -f $GIT_DIRECTORY ] || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY
 
 # Do the task
 cd $GIT_DIRECTORY
