@@ -5,11 +5,8 @@
 # General settings will be overwritten by container settings if different.
 
 ## General Settings
-shared-directory          : /opt/flare
-app-directory             : # /root/flare (default)
 ssh-key:
-  public                  : 
-  private                 : 
+  private                 : # /home/$USER/.ssh/id_rsa (default for non-root), /root/.ssh/id_rsa (default for root)
 git:
   remote:
     server                : # github.com (default)
@@ -22,11 +19,10 @@ git:
 flare-push-test:
   git:
     ssh-key:
-      public              :
       private             :
     remote:
       server              : github.com
-      repository          : careylabvt/flare-containers.git
+      repository          : CareyLabVT/FLARE-containers.git
       branch              : test2
       user:
         name              :

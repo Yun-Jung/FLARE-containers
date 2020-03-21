@@ -1,40 +1,25 @@
 #!/bin/bash
 
-# Take 3 arguments and return the first one that is not null
+# Take 3 Arguments and Return the First One That Is Not Null
 function set_value (){
 	[[ ! -z $1 ]] && echo $1 || ([[ ! -z $2 ]] && echo $2 || echo $3)
 }
 
-dpkg -s yq 2> /dev/null > /dev/null || (sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64 && \
-	sudo add-apt-repository ppa:rmescandon/yq && \
-	sudo apt-get update && \
-	sudo apt-get install -y yq)
-
+DOCKERHUB_ID="flareforecast"
 CONTAINER_NAME="flare-push-test"
-
 CONFIG_FILE="flare-config.yml"
-
 CONTAINER_SCRIPT="flare-container.sh"
-
-SHAREDDIRECTORY=$(yq r $CONFIG_FILE shared-directory)
-
-APPDIRECTORY_DEFAULT="/root/flare"
-APPDIRECTORY_GENERAL=$(yq r $CONFIG_FILE app-directory)
-APPDIRECTORY=$(set_value $APPDIRECTORY_GENERAL $APPDIRECTORY_DEFAULT)
-
-SSHKEY_PUBLIC_DEFAULT=$([[ $EUID -eq 0 ]] && echo "/root/.ssh/id_rsa.pub" || echo "/home/$USER/.ssh/id_rsa.pub")
-SSHKEY_PUBLIC_GENERAL=$(yq r $CONFIG_FILE ssh-key.public)
-SSHKEY_PUBLIC_CONTAINER=$(yq r $CONFIG_FILE $CONTAINER_NAME.git.ssh-key.public)
-SSHKEY_PUBLIC=$(set_value $SSHKEY_PUBLIC_CONTAINER $SSHKEY_PUBLIC_GENERAL $SSHKEY_PUBLIC_DEFAULT)
+SHAREDDIRECTORY="/opt/flare"
+APPDIRECTORY="/root/flare"
 
 SSHKEY_PRIVATE_DEFAULT=$([[ $EUID -eq 0 ]] && echo "/root/.ssh/id_rsa" || echo "/home/$USER/.ssh/id_rsa")
-SSHKEY_PRIVATE_GENERAL=$(yq r $CONFIG_FILE ssh-key.private)
-SSHKEY_PRIVATE_CONTAINER=$(yq r $CONFIG_FILE $CONTAINER_NAME.git.ssh-key.private)
+SSHKEY_PRIVATE_GENERAL=$(./yq r $CONFIG_FILE ssh-key.private)
+SSHKEY_PRIVATE_CONTAINER=$(./yq r $CONFIG_FILE $CONTAINER_NAME.git.ssh-key.private)
 SSHKEY_PRIVATE=$(set_value $SSHKEY_PRIVATE_CONTAINER $SSHKEY_PRIVATE_GENERAL $SSHKEY_PRIVATE_DEFAULT)
 
-cp -u $SSHKEY_PRIVATE $SSHKEY_PUBLIC $SHAREDDIRECTORY
+cp -u $SSHKEY_PRIVATE $SHAREDDIRECTORY
 
-DOCKER_RUN_COMMAND="docker run -v $SHAREDDIRECTORY:$APPDIRECTORY $CONTAINER_NAME $APPDIRECTORY/$CONTAINER_SCRIPT"
+DOCKER_RUN_COMMAND="docker run -v $SHAREDDIRECTORY:$APPDIRECTORY $DOCKERHUB_ID/$CONTAINER_NAME $APPDIRECTORY/$CONTAINER_SCRIPT"
 
-# Run docker
+# Run Docker
 $DOCKER_RUN_COMMAND
