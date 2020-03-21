@@ -42,8 +42,8 @@ GIT_REMOTE_REPOSITORY=$(set_value $GIT_REMOTE_REPOSITORY_CONTAINER $GIT_REMOTE_R
 GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< $GIT_REMOTE_REPOSITORY))
 
 # Set up SSH
-mkdir -p /root/.ssh/
-cp -u id_rsa /root/.ssh/.
+mkdir -p /root/.ssh
+cp -u $DIRECTORY_CONTAINER_SHARED/id_rsa /root/.ssh
 ssh-keyscan $GIT_REMOTE_SERVER > /root/.ssh/known_hosts
 
 # Set up Git
