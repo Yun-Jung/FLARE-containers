@@ -5,6 +5,7 @@ sudo mkdir -p /opt/flare
 sudo chown -R $USER:$USER /opt/flare
 
 # Get Required Files
-wget -c -O /opt/flare/flare-config.yml https://raw.githubusercontent.com/CareyLabVT/FLARE-containers/flare-push-test/flare-config.yml
-wget -c -O /opt/flare/flare-host.sh https://raw.githubusercontent.com/CareyLabVT/FLARE-containers/flare-push-test/flare-host.sh
-chmod +x /opt/flare/flare-host.sh
+sudo wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
+wget -O /opt/flare/flare-config.yml https://raw.githubusercontent.com/CareyLabVT/FLARE-containers/flare-push-test/flare-config.yml
+wget -O /opt/flare/flare-host.sh https://raw.githubusercontent.com/CareyLabVT/FLARE-containers/flare-push-test/flare-host.sh
+chmod +x /usr/bin/yq /opt/flare/flare-host.sh
