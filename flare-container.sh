@@ -39,8 +39,8 @@ GIT_REMOTE_REPOSITORY_CONTAINER=$(yq r $DIRECTORY_CONTAINER_SHARED/$CONFIG_FILE 
 GIT_REMOTE_REPOSITORY=$(set_value $GIT_REMOTE_REPOSITORY_CONTAINER $GIT_REMOTE_REPOSITORY_GENERAL $GIT_REMOTE_REPOSITORY_DEFAULT)
 
 SSHKEY_PRIVATE_DEFAULT=$([[ $EUID -eq 0 ]] && echo "/root/.ssh/id_rsa" || echo "/home/$USER/.ssh/id_rsa")
-SSHKEY_PRIVATE_GENERAL=$(yq r $DIRECTORY_HOST_SHARED/$CONFIG_FILE ssh-key.private)
-SSHKEY_PRIVATE_CONTAINER=$(yq r $DIRECTORY_HOST_SHARED/$CONFIG_FILE $CONTAINER_NAME.git.ssh-key.private)
+SSHKEY_PRIVATE_GENERAL=$(yq r $DIRECTORY_CONTAINER_SHARED/$CONFIG_FILE ssh-key.private)
+SSHKEY_PRIVATE_CONTAINER=$(yq r $DIRECTORY_CONTAINER_SHARED/$CONFIG_FILE $CONTAINER_NAME.git.ssh-key.private)
 SSHKEY_PRIVATE=$(set_value $SSHKEY_PRIVATE_CONTAINER $SSHKEY_PRIVATE_GENERAL $SSHKEY_PRIVATE_DEFAULT)
 
 # Extract Directory Name from Remote Repository Name
@@ -48,9 +48,6 @@ GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< $GIT_REMOTE
 
 # Extract Private SSH Key File Name from Full Path
 SSHKEY_PRIVATE_FILE=$(awk -F/ '{print $NF}' <<< $SSHKEY_PRIVATE)
-echo $SSHKEY_PRIVATE_FILE
-echo $$DIRECTORY_CONTAINER_SHARED
-echo $DIRECTORY_CONTAINER_SHARED/$SSHKEY_PRIVATE_FILE
 
 # Set up SSH
 mkdir -p /root/.ssh
@@ -70,8 +67,8 @@ git checkout $GIT_REMOTE_BRANCH
 git pull
 echo $(date) >> date.log
 git add .
-git commit -m "Add current date"
+git commit -m "Add Current Date"
 git push
 
 # Remove .ssh Directory for Security Purposes
-rm -rf /root/.ssh/
+rm -rf /root/.ssh
