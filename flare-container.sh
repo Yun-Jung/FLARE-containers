@@ -48,6 +48,9 @@ GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< $GIT_REMOTE
 
 # Extract Private SSH Key File Name from Full Path
 SSHKEY_PRIVATE_FILE=$(awk -F/ '{print $NF}' <<< $SSHKEY_PRIVATE)
+echo $SSHKEY_PRIVATE_FILE
+echo $$DIRECTORY_CONTAINER_SHARED
+echo $DIRECTORY_CONTAINER_SHARED/$SSHKEY_PRIVATE_FILE
 
 # Set up SSH
 mkdir -p /root/.ssh
