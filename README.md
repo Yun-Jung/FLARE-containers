@@ -1,3 +1,3 @@
 # FLARE-containers
-Branches:
+**Branches:**
 - FLARE-push-test
