@@ -51,7 +51,7 @@ SSHKEY_PRIVATE_FILE=$(awk -F/ '{print $NF}' <<< $SSHKEY_PRIVATE)
 
 # Set up SSH
 mkdir -p /root/.ssh
-cp -u $DIRECTORY_CONTAINER_SHARED/$SSHKEY_PRIVATE_FILE /root/.ssh
+cp -u $DIRECTORY_CONTAINER_SHARED/$SSHKEY_PRIVATE_FILE /root/.ssh/id_rsa
 ssh-keyscan $GIT_REMOTE_SERVER > /root/.ssh/known_hosts
 
 # Set up Git
