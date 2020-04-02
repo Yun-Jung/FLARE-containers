@@ -22,7 +22,7 @@ flare-push-test:
       private             :
     remote:
       server              : github.com
-      repository          : CareyLabVT/FLARE-containers.git
+      repository          : FLARE-forecast/FLARE-containers.git
       branch              : test2
       user:
         name              :
