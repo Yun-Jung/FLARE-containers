@@ -5,6 +5,7 @@
 # General settings will be overwritten by container settings if different.
 
 ## General Settings
+version                   :
 ssh-key:
   private                 : # /home/$USER/.ssh/id_rsa (default for non-root), /root/.ssh/id_rsa (default for root)
 git:
@@ -14,16 +15,17 @@ git:
     user:
       name                :
       email               :
-        
-## flare-push-test Container Settings
-flare-push-test:
+
+## flare-external-driver-interface-noaa
+flare-external-driver-interface-noaa:
+  version                 :
   git:
     ssh-key:
       private             :
     remote:
       server              : github.com
-      repository          : FLARE-forecast/FLARE-containers.git
-      branch              : test2
+      repository          : FLARE-forecast/test-data
+      branch              : flare-external-driver-interface-noaa
       user:
         name              :
         email             :

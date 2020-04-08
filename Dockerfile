@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM rocker/rstudio
 
 # Install Dependencies
 RUN apt-get update && \
@@ -11,6 +11,8 @@ RUN mkdir /root/flare
 RUN wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
 
 # Get flare-container.sh
-RUN wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-push-test/flare-container.sh
+RUN wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/flare-container.sh
+
+RUN wget -O /root/flare/grab-weekly-forecast-for-glm-v3.R https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/grab-weekly-forecast-for-glm-v3.R
 
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh

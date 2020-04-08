@@ -9,7 +9,7 @@ function set_value (){
 cd $(dirname $0)
 
 DOCKERHUB_ID="flareforecast"
-CONTAINER_NAME="flare-push-test"
+CONTAINER_NAME="flare-external-driver-interface-noaa"
 CONFIG_FILE="flare-config.yml"
 DIRECTORY_CONTAINER_SHARED="/root/flare/shared"
 
@@ -62,13 +62,11 @@ git config --global user.email $GIT_REMOTE_USER_EMAIL
 [ ! -d $GIT_DIRECTORY ] && git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY
 
 # Do the Task
+Rscript /root/flare/grab-weekly-forecast-for-glm-v3.R
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
-git pull
-echo $(date) >> date.log
-git add .
-git commit -m "Add Current Date"
-git push
-
+git add *.*
+git commit -m "Add NOAA flareforecast" #2>&1 | tee -a $LOGFILE
+git push -f #2>&1 | tee -a $LOGFILE
 # Remove .ssh Directory for Security Purposes
 rm -rf /root/.ssh
