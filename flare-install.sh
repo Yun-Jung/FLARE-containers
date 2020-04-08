@@ -5,13 +5,12 @@ YQ_EXEC=https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
 FLARE_CONFIG=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/flare-config.yml
 FLARE_HOST=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/flare-host.sh
 
-sudo apt -y install wget \
-					curl
+sudo apt -y install wget curl
 
-curl -sSL https://get.docker.com/ | sudo sh
+# curl -sSL https://get.docker.com/ | sudo sh
 
 # Setup Flare Directory on the Host
-sudo mkdir -p /opt/flare/shared/$CONTAINER_NAME
+sudo mkdir -p /opt/flare/$CONTAINER_NAME /opt/flare/shared/$CONTAINER_NAME
 sudo chown -R $USER:$USER /opt/flare
 
 # Get Required Files
