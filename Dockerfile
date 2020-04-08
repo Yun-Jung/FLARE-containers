@@ -7,8 +7,8 @@ RUN apt-get -yq update && \
 	libxml2-dev \
 	ssh
 
-RUN R -e "install.packages('rNOMADS')" \
-	R -e "install.packages('RCurl')" \
+RUN R -e "install.packages('rNOMADS')" && \
+	R -e "install.packages('RCurl')" && \
 	R -e "install.packages('stringr')"
 
 RUN mkdir /root/flare
