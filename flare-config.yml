@@ -19,6 +19,11 @@ git:
 ## flare-external-driver-interface-noaa
 flare-external-driver-interface-noaa:
   version                 :
+  noaa:
+    site:
+      name                : fcre
+      latitude            : 37.27
+      longitude           : 79.9
   git:
     ssh-key:
       private             :
