@@ -3,7 +3,12 @@ FROM rocker/rstudio
 # Install Dependencies
 RUN apt-get update && \
 	apt-get install -y wget \
-	git
+	git \
+	libxml2-dev
+
+RUN R -e "install.packages('rNOMADS')" \
+	R -e "install.packages('RCurl')" \
+	R -e "install.packages('stringr')"
 
 RUN mkdir /root/flare
 
