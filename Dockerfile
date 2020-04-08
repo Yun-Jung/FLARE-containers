@@ -1,4 +1,4 @@
-FROM rocker/rstudio
+FROM rocker/r-base
 
 # Install Dependencies
 RUN apt-get -yq update && \
