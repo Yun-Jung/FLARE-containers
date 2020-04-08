@@ -59,12 +59,13 @@ git config --global user.name $GIT_REMOTE_USER_NAME
 git config --global user.email $GIT_REMOTE_USER_EMAIL
 
 # Clone Git Repository If Doesn't Exist
+cd shared
 [ ! -d $GIT_DIRECTORY ] && git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY
 
 # Do the Task
-Rscript /root/flare/grab-weekly-forecast-for-glm-v3.R
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
+Rscript /root/flare/grab-weekly-forecast-for-glm-v3.R
 git add *.*
 git commit -m "Add NOAA flareforecast" #2>&1 | tee -a $LOGFILE
 git push -f #2>&1 | tee -a $LOGFILE

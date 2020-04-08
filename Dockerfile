@@ -2,9 +2,10 @@ FROM rocker/rstudio
 
 # Install Dependencies
 RUN apt-get update && \
-	apt-get install -y wget \
+	apt-get install -yqq wget \
 	git \
-	libxml2-dev
+	libxml2-dev \
+	ssh
 
 RUN R -e "install.packages('rNOMADS')" \
 	R -e "install.packages('RCurl')" \

@@ -14,7 +14,7 @@ lake_lon_w_list = c(system('yq r flare-config.yml flare-external-driver-interfac
 
 lake_name_list = c(system('yq r flare-config.yml flare-external-driver-interface-noaa.noaa.site.name'))
 
-directory = '/root/flare/shared/'
+directory = '/root/flare/shared/test-data/'
 if(!file.exists(directory)) {
   dir.create(file.path(directory))
 }
