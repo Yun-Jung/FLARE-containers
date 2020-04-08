@@ -1,8 +1,8 @@
 FROM rocker/rstudio
 
 # Install Dependencies
-RUN apt-get update && \
-	apt-get install -yqq wget \
+RUN apt-get -yq update && \
+	apt-get -yqq install wget \
 	git \
 	libxml2-dev \
 	ssh

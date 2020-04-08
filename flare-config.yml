@@ -18,7 +18,7 @@ git:
 
 ## flare-external-driver-interface-noaa
 flare-external-driver-interface-noaa:
-  version                 :
+  version                 : 0.1
   noaa:
     site:
       name                : fcre
