@@ -66,7 +66,7 @@ cd shared
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
 Rscript /root/flare/grab-weekly-forecast-for-glm-v3.R
-git add *.*
+git add .
 git commit -m "Add NOAA flareforecast" #2>&1 | tee -a $LOGFILE
 git push -f #2>&1 | tee -a $LOGFILE
 # Remove .ssh Directory for Security Purposes
