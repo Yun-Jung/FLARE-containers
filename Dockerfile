@@ -6,7 +6,7 @@ RUN apt-get -yq update && \
 	git \
 	libxml2-dev \
 	ssh && \
-	R -e "install.packages('rNOMADS', RCurl', 'stringr', 'yaml')" && \
+	R -e "install.packages('rNOMADS', 'RCurl', 'stringr', 'yaml')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64 
 
 # Get flare-container.sh
