@@ -1,7 +1,7 @@
-if (!"rNOMADS" %in% installed.packages()) install.packages("rNOMADS")
-if (!"RCurl" %in% installed.packages()) install.packages("RCurl")
-if (!"stringr" %in% installed.packages()) install.packages("stringr")
-if (!"yaml" %in% installed.packages()) install.packages("yaml")
+#if (!"rNOMADS" %in% installed.packages()) install.packages("rNOMADS")
+#if (!"RCurl" %in% installed.packages()) install.packages("RCurl")
+#if (!"stringr" %in% installed.packages()) install.packages("stringr")
+#if (!"yaml" %in% installed.packages()) install.packages("yaml")
 
 library(rNOMADS)
 library(RCurl)
@@ -9,7 +9,7 @@ library(stringr)
 library(yaml)
 
 #Read Config File
-config=yaml.load_file("/root/flare/shared/flare-external-driver-interface-noaa/flare-config.yml")
+config=yaml.load_file("/root/flare/shared/flare-config.yml")
 
 #User defined location of interest and directory
 lake_lat_n_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["latitude"]])
