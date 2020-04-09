@@ -1,20 +1,24 @@
 if (!"rNOMADS" %in% installed.packages()) install.packages("rNOMADS")
 if (!"RCurl" %in% installed.packages()) install.packages("RCurl")
 if (!"stringr" %in% installed.packages()) install.packages("stringr")
+if (!"yaml" %in% installed.packages()) install.packages("yaml")
 
 library(rNOMADS)
 library(RCurl)
 library(stringr)
+library(yaml)
+
+#Read Config File
+config=yaml.load_file("/root/flare/shared/flare-external-driver-interface-noaa/flare-config.yml")
 
 #User defined location of interest and directory
-
-lake_lat_n_list = c(system('yq r /root/flare/shared/flare-config.yml flare-external-driver-interface-noaa.noaa.site.latitude')) 
-lake_lon_w_list = c(system('yq r /root/flare/shared/flare-config.yml flare-external-driver-interface-noaa.noaa.site.longitude')) 
+lake_lat_n_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["latitude"]])
+lake_lon_w_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["longitude"]])
 #Degrees west (does not currently work for sites in eastern hemisphere)
 
-lake_name_list = c(system('yq r /root/flare/shared/flare-config.yml flare-external-driver-interface-noaa.noaa.site.name'))
+lake_name_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["name"]])
 
-directory = '/root/flare/shared/test-data/'
+directory = "/root/flare/shared/test-data/"
 if(!file.exists(directory)) {
   dir.create(file.path(directory))
 }
@@ -132,4 +136,3 @@ for(lake_index in 1:length(lake_name_list)){
     }
   }
 }
-

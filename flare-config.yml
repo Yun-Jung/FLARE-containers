@@ -5,7 +5,6 @@
 # General settings will be overwritten by container settings if different.
 
 ## General Settings
-version                   :
 ssh-key:
   private                 : # /home/$USER/.ssh/id_rsa (default for non-root), /root/.ssh/id_rsa (default for root)
 git:
@@ -18,7 +17,6 @@ git:
 
 ## flare-external-driver-interface-noaa
 flare-external-driver-interface-noaa:
-  version                 : 0.1
   noaa:
     site:
       name                : fcre
