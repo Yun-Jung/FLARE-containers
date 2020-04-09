@@ -13,6 +13,7 @@ cd $(dirname $0)
 DOCKERHUB_ID="flareforecast"
 CONTAINER_NAME="flare-external-driver-interface-noaa"
 CONFIG_FILE="flare-config.yml"
+NOAA_SCRIPT="/root/flare/grab-weekly-forecast-for-glm-v3.R"
 DIRECTORY_CONTAINER_SHARED="/root/flare/shared"
 
 GIT_REMOTE_USER_NAME_DEFAULT=""
@@ -70,7 +71,7 @@ git checkout $GIT_REMOTE_BRANCH
 git add .
 git commit -m "$TIMESTAMP - Initialize Container"
 git pull --no-edit
-Rscript /root/flare/grab-weekly-forecast-for-glm-v3.R
+Rscript $NOAA_SCRIPT
 git add .
 git commit -m "$TIMESTAMP - Add NOAA Forecast" #2>&1 | tee -a $LOGFILE
 git push #2>&1 | tee -a $LOGFILE

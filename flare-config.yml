@@ -12,8 +12,8 @@ git:
     server                : # github.com (default)
     branch                : # test1 (default)
     user:
-      name                : vahid-dan
-      email               : v.daneshmand@gmail.com
+      name                :
+      email               :
 
 ## flare-external-driver-interface-noaa
 flare-external-driver-interface-noaa:
