@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TIMESTAMP=$(date +"%D %T")
+
 # Take 3 Arguments and Return the First One That Is Not Null
 function set_value (){
 	[[ ! -z $1 ]] && echo $1 || ([[ ! -z $2 ]] && echo $2 || echo $3)
@@ -65,9 +67,12 @@ cd shared
 # Do the Task
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
+git add .
+git commit -m "$TIMESTAMP - Initialize Container"
+git pull --no-edit
 Rscript /root/flare/grab-weekly-forecast-for-glm-v3.R
 git add .
-git commit -m "Add NOAA flareforecast" #2>&1 | tee -a $LOGFILE
-git push -f #2>&1 | tee -a $LOGFILE
+git commit -m "$TIMESTAMP - Add NOAA Forecast" #2>&1 | tee -a $LOGFILE
+git push #2>&1 | tee -a $LOGFILE
 # Remove .ssh Directory for Security Purposes
 rm -rf /root/.ssh
