@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Exit When Any Command Fails
+set -e
+# Keep Track of the Last Executed Command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# Echo an Error Message Before Exiting
+trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+
 TIMESTAMP=$(date +"%D %T")
 
 # Take 3 Arguments and Return the First One That Is Not Null
@@ -65,8 +72,11 @@ git config --global user.email $GIT_REMOTE_USER_EMAIL
 cd shared
 [ ! -d $GIT_DIRECTORY ] && git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY
 
-# Do the Task
+# Check If It Is Indeed the Right Git Directory
 cd $GIT_DIRECTORY
+[ ! -z `git config --get remote.origin.url | grep "/"$GIT_REMOTE_REPOSITORY` ] && echo "Fatal Error: The Git repository $GIT_REMOTE_REPOSITORY is expected in `pwd`." && exit 1
+
+# Do the Task
 git checkout $GIT_REMOTE_BRANCH
 git add .
 git commit -m "$TIMESTAMP - Initialize Container"

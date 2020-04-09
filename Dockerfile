@@ -5,6 +5,8 @@ RUN apt-get -yq update && \
 	apt-get -yqq install wget \
 	git \
 	libxml2-dev \
+	libcurl4-openssl-dev \
+	libssl-dev \
 	ssh && \
 	R -e "install.packages(c('rNOMADS', 'RCurl', 'stringr', 'yaml'))" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64 
