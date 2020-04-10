@@ -76,7 +76,7 @@ git config --global user.email $GIT_REMOTE_USER_EMAIL
 
 # Clone Git Repository If Doesn't Exist
 cd shared
-([ -d $GIT_DIRECTORY ] && (is_right_directory $GIT_DIRECTORY "/"$GIT_REMOTE_REPOSITORY)) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY 
+([ -d $GIT_DIRECTORY ] && (is_right_directory $GIT_DIRECTORY "/"$GIT_DIRECTORY".git")) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY 
 
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
