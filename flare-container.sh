@@ -14,6 +14,12 @@ function set_value (){
 	[[ ! -z $1 ]] && echo $1 || ([[ ! -z $2 ]] && echo $2 || echo $3)
 }
 
+# Check If the Directory is the Expected Git Repository
+function is_right_directory (){
+	cd $1
+	[ -z `git config --get remote.origin.url | grep "/"$2` ] && echo "Fatal Error: The Git repository '$2' is expected in '`pwd`'." && exit 1
+}
+
 # Change Directory to $DIRECTORY_CONTAINER
 cd $(dirname $0)
 
@@ -70,20 +76,19 @@ git config --global user.email $GIT_REMOTE_USER_EMAIL
 
 # Clone Git Repository If Doesn't Exist
 cd shared
-[ ! -d $GIT_DIRECTORY ] && git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY
+([ -d $GIT_DIRECTORY ] && (is_right_directory $GIT_DIRECTORY "/"$GIT_REMOTE_REPOSITORY)) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY 
 
-# Check If It Is Indeed the Right Git Directory
 cd $GIT_DIRECTORY
-[ ! -z `git config --get remote.origin.url | grep "/"$GIT_REMOTE_REPOSITORY` ] && echo "Fatal Error: The Git repository $GIT_REMOTE_REPOSITORY is expected in `pwd`." && exit 1
-
-# Do the Task
 git checkout $GIT_REMOTE_BRANCH
-git add .
-git commit -m "$TIMESTAMP - Initialize Container"
+
+# Commit Any Uncommited Change
+[ ! -z git ls-files --other --exclude-standard --directory ] && git add . && git commit -m "$TIMESTAMP - Previously Uncommited Changes"
+
 git pull --no-edit
 Rscript $NOAA_SCRIPT
 git add .
 git commit -m "$TIMESTAMP - Add NOAA Forecast" #2>&1 | tee -a $LOGFILE
 git push #2>&1 | tee -a $LOGFILE
+
 # Remove .ssh Directory for Security Purposes
 rm -rf /root/.ssh
