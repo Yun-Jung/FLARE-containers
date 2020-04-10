@@ -5,7 +5,7 @@ set -e
 # Keep Track of the Last Executed Command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 # Echo an Error Message Before Exiting
-trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+trap 'echo "\"${last_command}\" command failed with exit code $?."' EXIT
 
 TIMESTAMP=$(date +"%D %T")
 
@@ -15,9 +15,9 @@ function set_value (){
 }
 
 # Check If the Directory is the Expected Git Repository
-function is_right_directory (){
+function is_right_git_dir (){
 	cd $1
-	[ -z `git config --get remote.origin.url | grep "/"$2` ] && echo "Fatal Error: The Git repository '$2' is expected in '`pwd`'." && exit 1
+	[ -z `git config --get remote.origin.url | grep "/"$1".git"` ] && echo "Fatal Error: The Git repository '$1.git' is expected in '`pwd`'." && exit 1
 }
 
 # Change Directory to $DIRECTORY_CONTAINER
@@ -76,7 +76,7 @@ git config --global user.email $GIT_REMOTE_USER_EMAIL
 
 # Clone Git Repository If Doesn't Exist
 cd shared
-([ -d $GIT_DIRECTORY ] && (is_right_directory $GIT_DIRECTORY "/"$GIT_DIRECTORY".git")) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY 
+([ -d $GIT_DIRECTORY ] && (is_right_git_dir $GIT_DIRECTORY)) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY 
 
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
