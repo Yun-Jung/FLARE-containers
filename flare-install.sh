@@ -21,5 +21,5 @@ sudo chmod +x /usr/bin/yq /opt/flare/$CONTAINER_NAME/flare-host.sh
 yq w -i $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE ssh-key.private $(([ $EUID -eq 0 ] && echo "/root/.ssh/id_rsa") || echo "/home/$USER/.ssh/id_rsa")
 
 # Set Default Value for git.remote.user.name and git.remote.user.email from the Host Git Config
-yq w -i $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE git.remote.user.name $(git config --global user.name)
-yq w -i $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE git.remote.user.email $(git config --global user.email)
+yq w -i $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE git.remote.user.name "$(git config --global user.name)"
+yq w -i $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE git.remote.user.email "$(git config --global user.email)"
