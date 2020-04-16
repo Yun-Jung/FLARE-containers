@@ -1,23 +1,38 @@
 #!/bin/bash
 
-# Exit When Any Command Fails
+# Exit If Any Command Fails
 set -e
+
+# Exit If Tries to Use Undeclared Variables
+set -u
+
 # Keep Track of the Last Executed Command
-trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+current_command=""
+trap 'last_command=$current_command; current_command=$BASH_COMMAND;' DEBUG
+
 # Echo an Error Message Before Exiting
-trap 'echo "\"${last_command}\" command failed with exit code $?."' EXIT
+trap 'echo "\"${last_command}\" failed with exit code $?."' ERR
+
+# Cleanup Before Exiting
+trap 'finish' EXIT
 
 TIMESTAMP=$(date +"%D %T")
 
 # Take 3 Arguments and Return the First One That Is Not Null
 function set_value (){
-	[[ ! -z $1 ]] && echo $1 || ([[ ! -z $2 ]] && echo $2 || echo $3)
+	[ ! -z $1 ] && echo $1 || ([ ! -z $2 ] && echo $2 || echo $3)
 }
 
 # Check If the Directory is the Expected Git Repository
 function is_right_git_dir (){
 	cd $1
-	[ -z `git config --get remote.origin.url | grep "/"$1".git"` ] && echo "Fatal Error: The Git repository '$1.git' is expected in '`pwd`'." && exit 1
+	[ ! -z `git config --get remote.origin.url | grep $1` ] || (echo "Fatal Error: The Git repository '$1.git' is expected in '`pwd`'." && false)
+}
+
+# Cleanup Code
+function finish {
+	# Remove .ssh Directory for Security Purposes
+	rm -rf /root/.ssh
 }
 
 # Change Directory to $DIRECTORY_CONTAINER
@@ -65,30 +80,30 @@ GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< $GIT_REMOTE
 # Extract Private SSH Key File Name from Full Path
 SSHKEY_PRIVATE_FILE=$(awk -F/ '{print $NF}' <<< $SSHKEY_PRIVATE)
 
-# Set up SSH
+# Setup SSH
 mkdir -p /root/.ssh
 cp -u $DIRECTORY_CONTAINER_SHARED/$SSHKEY_PRIVATE_FILE /root/.ssh/id_rsa
 ssh-keyscan $GIT_REMOTE_SERVER > /root/.ssh/known_hosts
 
-# Set up Git
+# Setup Git
 git config --global user.name $GIT_REMOTE_USER_NAME
 git config --global user.email $GIT_REMOTE_USER_EMAIL
 
-# Clone Git Repository If Doesn't Exist
 cd shared
-([ -d $GIT_DIRECTORY ] && (is_right_git_dir $GIT_DIRECTORY)) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY 
+
+# Check If the Directory Is There and Is the Right Git Directory and Clone the Git Repository If Doesn't Exist
+([ -d $GIT_DIRECTORY ] && is_right_git_dir $GIT_DIRECTORY) || git clone git@$GIT_REMOTE_SERVER:$GIT_REMOTE_REPOSITORY  
 
 cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
 
-# Commit Any Uncommited Change
-[ ! -z git ls-files --other --exclude-standard --directory ] && git add . && git commit -m "$TIMESTAMP - Previously Uncommited Changes"
+# Commit Any Uncommited Changes
+[ -z `git ls-files --other --exclude-standard --directory` ] || (git add . && git commit -m "$TIMESTAMP - Previously Uncommited Changes")
 
 git pull --no-edit
-Rscript $NOAA_SCRIPT
-git add .
-git commit -m "$TIMESTAMP - Add NOAA Forecast" #2>&1 | tee -a $LOGFILE
-git push #2>&1 | tee -a $LOGFILE
 
-# Remove .ssh Directory for Security Purposes
-rm -rf /root/.ssh
+# Run the NOAA Downloader Script
+Rscript $NOAA_SCRIPT
+
+# Commit Any News Changes
+[ -z `git ls-files --other --exclude-standard --directory` ] || (git add . && git commit -m "$TIMESTAMP - Add NOAA Forecast" && git push)

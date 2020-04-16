@@ -8,17 +8,21 @@ library(RCurl)
 library(stringr)
 library(yaml)
 
+config_file = "/root/flare/shared/flare-config.yml"
+container_name = "flare-external-driver-interface-noaa"
+output_directory = "/root/flare/shared/test-data/"
+
 #Read Config File
-config=yaml.load_file("/root/flare/shared/flare-config.yml")
+config=yaml.load_file(config_file)
 
 #User defined location of interest and directory
-lake_lat_n_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["latitude"]])
-lake_lon_w_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["longitude"]])
+lake_lat_n_list = c(config[[container_name]][["noaa"]][["site"]][["latitude"]])
+lake_lon_w_list = c(config[[container_name]][["noaa"]][["site"]][["longitude"]])
 #Degrees west (does not currently work for sites in eastern hemisphere)
 
-lake_name_list = c(config[["flare-external-driver-interface-noaa"]][["noaa"]][["site"]][["name"]])
+lake_name_list = c(config[[container_name]][["noaa"]][["site"]][["name"]])
 
-directory = "/root/flare/shared/test-data/"
+directory = output_directory
 if(!file.exists(directory)) {
   dir.create(file.path(directory))
 }
