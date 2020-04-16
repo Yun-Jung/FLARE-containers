@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Take 3 Arguments and Return the First One That Is Not Null
+# Take Two Arguments and Return the First One That Is Not Null
 function set_value (){
-	[[ ! -z $1 ]] && echo $1 || ([[ ! -z $2 ]] && echo $2 || echo $3)
+	([ ! -z $1 ] && echo $1) || echo $2
 }
 
 DOCKERHUB_ID="flareforecast"
@@ -14,10 +14,9 @@ DIRECTORY_HOST_SHARED="/opt/flare/shared"
 DIRECTORY_CONTAINER="/root/flare"
 DIRECTORY_CONTAINER_SHARED="/root/flare/shared"
 
-SSHKEY_PRIVATE_DEFAULT=$([[ $EUID -eq 0 ]] && echo "/root/.ssh/id_rsa" || echo "/home/$USER/.ssh/id_rsa")
 SSHKEY_PRIVATE_GENERAL=$(yq r $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE ssh-key.private)
 SSHKEY_PRIVATE_CONTAINER=$(yq r $DIRECTORY_HOST_SHARED/$CONTAINER_NAME/$CONFIG_FILE $CONTAINER_NAME.git.ssh-key.private)
-SSHKEY_PRIVATE=$(set_value $SSHKEY_PRIVATE_CONTAINER $SSHKEY_PRIVATE_GENERAL $SSHKEY_PRIVATE_DEFAULT)
+SSHKEY_PRIVATE=$(set_value $SSHKEY_PRIVATE_CONTAINER $SSHKEY_PRIVATE_GENERAL)
 
 cp -u $SSHKEY_PRIVATE $DIRECTORY_HOST_SHARED/$CONTAINER_NAME
 

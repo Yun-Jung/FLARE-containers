@@ -6,29 +6,28 @@
 
 ## General Settings
 ssh-key:
-  private                 : # /home/$USER/.ssh/id_rsa (default for non-root), /root/.ssh/id_rsa (default for root)
+  private:
 git:
   remote:
-    server                : # github.com (default)
-    branch                : # test1 (default)
+    server: github.com
+    branch: master
     user:
-      name                :
-      email               :
-
+      name:
+      email:
 ## flare-external-driver-interface-noaa
 flare-external-driver-interface-noaa:
   noaa:
     site:
-      name                : fcre
-      latitude            : 37.27
-      longitude           : 79.9
+      name: fcre
+      latitude: 37.27
+      longitude: 79.9
   git:
     ssh-key:
-      private             :
+      private:
     remote:
-      server              : github.com
-      repository          : FLARE-forecast/test-data
-      branch              : flare-external-driver-interface-noaa
+      server: github.com
+      repository: FLARE-forecast/test-data
+      branch: flare-external-driver-interface-noaa
       user:
-        name              :
-        email             :
+        name:
+        email:
