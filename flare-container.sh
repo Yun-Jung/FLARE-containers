@@ -26,7 +26,7 @@ function set_value (){
 # Check If the Directory is the Expected Git Repository
 function is_right_git_dir (){
 	cd $1
-	[ ! -z `git config --get remote.origin.url | grep $1` ] || (echo "Fatal Error: The Git repository '$1.git' is expected in '`pwd`'." && false)
+	[ ! -z $(git config --get remote.origin.url | grep $1) ] || (echo "Fatal Error: The Git repository '$1.git' is expected in '$(pwd)'." && return 1)
 }
 
 # Cleanup Code
@@ -98,7 +98,7 @@ cd $GIT_DIRECTORY
 git checkout $GIT_REMOTE_BRANCH
 
 # Commit Any Uncommited Changes
-[ -z `git ls-files --other --exclude-standard --directory` ] || (git add . && git commit -m "$TIMESTAMP - Previously Uncommited Changes")
+[ -z $(git ls-files --other --exclude-standard --directory) ] || (git add . && git commit -m "$TIMESTAMP - Previously Uncommited Changes" && git push)
 
 git pull --no-edit
 
@@ -106,4 +106,4 @@ git pull --no-edit
 Rscript $NOAA_SCRIPT
 
 # Commit Any News Changes
-[ -z `git ls-files --other --exclude-standard --directory` ] || (git add . && git commit -m "$TIMESTAMP - Add NOAA Forecast" && git push)
+[ -z $(git ls-files --other --exclude-standard --directory) ] || (git add . && git commit -m "$TIMESTAMP - Add NOAA Forecast" && git push)
