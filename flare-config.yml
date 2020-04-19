@@ -1,7 +1,4 @@
 ### Configuration File for CIBR-FLARE Project
-
-# If no value is entered for a key, the default value will be applied.
-
 # General settings will be overwritten by container settings if different.
 
 ## General Settings
