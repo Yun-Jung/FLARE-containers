@@ -49,7 +49,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/main.sh"
 
 function __b3bp_cleanup_before_exit () {
   rm -rf /root/.ssh
-  info "Cleaning up. Done."
+  info "Done Cleaning Up"
 }
 trap __b3bp_cleanup_before_exit EXIT
 
@@ -96,7 +96,10 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-# Change Directory to $DIRECTORY_CONTAINER
+# Runtime Timestamp Used in Git Commit Messages
+TIMESTAMP=$(date +"%D %T")
+
+# Change Directory to ${DIRECTORY_CONTAINER}
 cd ${__dir}
 
 CONTAINER="flare-external-driver-interface-noaa"
@@ -150,7 +153,7 @@ cd ${GIT_DIRECTORY}
 git checkout ${GIT_REMOTE_BRANCH}
 
 # Commit Any Uncommited Changes
-[ -z $(git ls-files --other --exclude-standard --directory) ] || (git add . && git commit -m "${TIMESTAMP} - Previously Uncommited Changes" && git push)
+[ -z $(git ls-files --other --exclude-standard --directory -z) ] || (git add . && git commit -m "${TIMESTAMP} - Previously Uncommited Changes" && git push)
 
 git pull --no-edit
 
@@ -158,4 +161,4 @@ git pull --no-edit
 Rscript ${NOAA_SCRIPT}
 
 # Commit Any New Changes
-[ -z $(git ls-files --other --exclude-standard --directory) ] || (git add . && git commit -m "${TIMESTAMP} - Add NOAA Forecast" && git push)
+[ -z $(git ls-files --other --exclude-standard --directory -z) ] || (git add . && git commit -m "${TIMESTAMP} - Add NOAA Forecast" && git push)

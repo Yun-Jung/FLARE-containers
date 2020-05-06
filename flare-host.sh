@@ -37,7 +37,7 @@ EOF
 
 # shellcheck disable=SC2034
 read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
- 'flare-host' script for 'flare-external-driver-interface-noaa' container
+  'flare-host' script for 'flare-external-driver-interface-noaa' container
 EOF
 
 # shellcheck source=main.sh
@@ -48,7 +48,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/main.sh"
 ##############################################################################
 
 function __b3bp_cleanup_before_exit () {
-  info "Cleaning up. Done."
+  info "Done Cleaning Up"
 }
 trap __b3bp_cleanup_before_exit EXIT
 
