@@ -13,8 +13,11 @@ YQ_URL=https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
 YQ=/usr/bin/yq
 CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER}/flare-config.yml
 HOST_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER}/flare-host.sh
+MAIN_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER}/main.sh
+
 CONFIG="flare-config.yml"
 HOST_SCRIPT="flare-host.sh"
+MAIN_SCRIPT="main.sh"
 DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
 
@@ -26,6 +29,7 @@ sudo chown -R $USER:$USER ${DIRECTORY_HOST}
 sudo wget -O ${YQ} ${YQ_URL}
 wget -O ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG} ${CONFIG_URL}
 wget -O ${DIRECTORY_HOST}/${CONTAINER}/${HOST_SCRIPT} ${HOST_SCRIPT_URL}
+wget -O ${DIRECTORY_HOST}/${CONTAINER}/${MAIN_SCRIPT} ${MAIN_SCRIPT_URL}
 sudo chmod +x ${YQ} ${DIRECTORY_HOST}/${CONTAINER}/${HOST_SCRIPT}
 
 # Set Default Value for ssh-key.private /home/$USER/.ssh/id_rsa (default for non-root), /root/.ssh/id_rsa (default for root)

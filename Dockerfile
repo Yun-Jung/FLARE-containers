@@ -13,8 +13,9 @@ RUN apt-get -yq update && \
 
 # Get flare-container.sh
 RUN mkdir /root/flare && \
-	wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/flare-container.sh && \
+	wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa-dev/flare-container.sh && \
+	wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa-dev/main.sh && \
 	chmod +x /usr/bin/yq /root/flare/flare-container.sh
 
 # Get NOAA Downloader Script
-RUN wget -O /root/flare/grab-weekly-forecast-for-glm-v3.R https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/grab-weekly-forecast-for-glm-v3.R
+RUN wget -O /root/flare/grab-weekly-forecast-for-glm-v3.R https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa-dev/grab-weekly-forecast-for-glm-v3.R
