@@ -95,7 +95,7 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-CONTAINER="flare-external-driver-interface-noaa"
+CONTAINER="flare-external-driver-interface-noaa-dev"
 
 SSHKEY_PRIVATE_GENERAL=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG} ssh-key.private)
 SSHKEY_PRIVATE_CONTAINER=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG} ${CONTAINER}.git.ssh-key.private)
