@@ -347,7 +347,7 @@ unset -v __tmp_varname
 TIMESTAMP=$(date +"%D %T")
 
 DOCKERHUB_ID="flareforecast"
-CONFIG="flare-config.yml"
+CONFIG_FILE="flare-config.yml"
 CONTAINER_SCRIPT="flare-container.sh"
 DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
