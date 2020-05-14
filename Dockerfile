@@ -14,7 +14,7 @@ RUN apt-get -yq update && \
 # Get flare-container.sh
 RUN mkdir /root/flare && \
 	wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa-dev/flare-container.sh && \
-	wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa-dev/main.sh && \
+	wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa-dev/main.sh && \
 	chmod +x /usr/bin/yq /root/flare/flare-container.sh
 
 # Get NOAA Downloader Script

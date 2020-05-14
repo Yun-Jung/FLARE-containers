@@ -347,7 +347,7 @@ unset -v __tmp_varname
 TIMESTAMP=$(date +"%D %T")
 
 DOCKERHUB_ID="flareforecast"
-CONFIG="flare-config.yml"
+CONFIG_FILE="flare-config.yml"
 CONTAINER_SCRIPT="flare-container.sh"
 DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
@@ -356,13 +356,13 @@ DIRECTORY_CONTAINER_SHARED="/root/flare/shared"
 
 # Take Two Arguments and Return the First One That Is Not Null
 function set_value () {
-  ([ ! -z $1 ] && echo $1) || echo $2
+  ([ ! -z ${1:-} ] && echo ${1}) || echo ${2:-}
 }
 
 # Check If the Directory is the Expected Git Repository
 function is_right_git_dir () {
-  cd $1
-  [ ! -z $(git config --get remote.origin.url | grep $1) ] || (echo "Fatal Error: The Git repository '$1.git' is expected in '${__dir}'." && return 1)
+  cd ${1:-}
+  [ ! -z $(git config --get remote.origin.url | grep ${1}) ] || (echo "Fatal Error: The Git repository '${1}.git' is expected in '$(pwd)'." && return 1)
 }
 
 

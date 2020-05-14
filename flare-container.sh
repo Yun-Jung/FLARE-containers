@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # This file:
 #
-#  - Runs flare-external-driver-interface-noaa container from the host.
+#  - Runs the service inside flare-external-driver-interface-noaa container.
 #
 # Usage:
 #
-#  LOG_LEVEL=7 ./flare-host.sh -d
+#  LOG_LEVEL=7 ./flare-container.sh -d
 #
 # Based on a template by BASH3 Boilerplate v2.3.0
 # http://bash3boilerplate.sh/#authors
@@ -99,9 +99,7 @@ fi
 # Runtime Timestamp Used in Git Commit Messages
 TIMESTAMP=$(date +"%D %T")
 
-# Change Directory to ${DIRECTORY_CONTAINER}
-cd ${__dir}
-
+cd ${DIRECTORY_CONTAINER}
 CONTAINER="flare-external-driver-interface-noaa"
 NOAA_SCRIPT="/root/flare/grab-weekly-forecast-for-glm-v3.R"
 
@@ -144,8 +142,7 @@ ssh-keyscan ${GIT_REMOTE_SERVER} > /root/.ssh/known_hosts
 git config --global user.name ${GIT_REMOTE_USER_NAME}
 git config --global user.email ${GIT_REMOTE_USER_EMAIL}
 
-cd shared
-
+cd ${DIRECTORY_CONTAINER_SHARED}
 # Check If the Directory Is There and Is the Right Git Directory and Clone the Git Repository If Doesn't Exist
 ([ -d ${GIT_DIRECTORY} ] && is_right_git_dir ${GIT_DIRECTORY}) || git clone git@${GIT_REMOTE_SERVER}:${GIT_REMOTE_REPOSITORY}
 

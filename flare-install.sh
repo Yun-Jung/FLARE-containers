@@ -8,7 +8,7 @@
 #  Running on the host:               ./flare-install.sh
 #  Running directly from the web:     wget -O - https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER}/flare-install.sh | /usr/bin/env bash
 
-CONTAINER=flare-external-driver-interface-noaa-dev
+CONTAINER=flare-external-driver-interface-noaa
 YQ_URL=https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64
 YQ=/usr/bin/yq
 CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER}/flare-config.yml
