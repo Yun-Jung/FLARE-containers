@@ -149,13 +149,13 @@ cd ${DIRECTORY_CONTAINER_SHARED}
 cd ${GIT_DIRECTORY}
 git checkout ${GIT_REMOTE_BRANCH}
 
-# Commit Any Uncommited Changes
-[ -z $(git ls-files --other --exclude-standard --directory -z) ] || (git add . && git commit -m "${TIMESTAMP} - Previously Uncommited Changes" && git push)
+# Push Any Previously Uncommited Changes
+git_push_if_required "${TIMESTAMP} - Add Previously Uncommited Changes"
 
 git pull --no-edit
 
 # Run the NOAA Downloader Script
 Rscript ${NOAA_SCRIPT}
 
-# Commit Any New Changes
-[ -z $(git ls-files --other --exclude-standard --directory -z) ] || (git add . && git commit -m "${TIMESTAMP} - Add NOAA Forecast" && git push)
+# Push Any New Changes
+git_push_if_required "${TIMESTAMP} - Add NOAA Forecast"

@@ -359,10 +359,15 @@ function set_value () {
   ([ ! -z ${1:-} ] && echo ${1}) || echo ${2:-}
 }
 
-# Check If the Directory is the Expected Git Repository
+# Check If the Directory Is the Expected Git Repository
 function is_right_git_dir () {
   cd ${1:-}
   [ ! -z $(git config --get remote.origin.url | grep ${1}) ] || (echo "Fatal Error: The Git repository '${1}.git' is expected in '$(pwd)'." && return 1)
+}
+
+# Push to Remote Git Reposiory If Any Change Available
+function git_push_if_required () {
+  [ -z $(git ls-files --other --exclude-standard --directory -z | tr '\0' '|') ] || (git add . && git commit -m "${1:-}" && git push)
 }
 
 
