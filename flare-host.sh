@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This file:
 #
-#  - Runs flare-external-driver-interface-noaa container from the host.
+#  - Runs FLARE container from the host.
 #
 # Usage:
 #
@@ -27,6 +27,8 @@
 # - We do not bash-expand defaults, so setting '~/app' as a default will not resolve to ${HOME}.
 #   you can use bash variables to work around this (so use ${HOME} instead)
 
+CONTAINER="flare-download-noaa-dev"
+
 # shellcheck disable=SC2034
 read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
   -v               Enable verbose mode, print script as it is executed
@@ -37,7 +39,7 @@ EOF
 
 # shellcheck disable=SC2034
 read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
-  'flare-host' script for 'flare-external-driver-interface-noaa' container
+  'flare-host' script for '${CONTAINER}' container
 EOF
 
 # shellcheck source=main.sh
@@ -48,7 +50,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/main.sh"
 ##############################################################################
 
 function __b3bp_cleanup_before_exit () {
-  info "Done Cleaning Up"
+  info "Done Cleaning Up Host"
 }
 trap __b3bp_cleanup_before_exit EXIT
 
@@ -95,13 +97,9 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-CONTAINER="flare-external-driver-interface-noaa"
+GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG_FILE} git.remote.ssh-key-private)
 
-SSHKEY_PRIVATE_GENERAL=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG_FILE} ssh-key.private)
-SSHKEY_PRIVATE_CONTAINER=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG_FILE} ${CONTAINER}.git.ssh-key.private)
-SSHKEY_PRIVATE=$(set_value ${SSHKEY_PRIVATE_CONTAINER} ${SSHKEY_PRIVATE_GENERAL})
-
-cp -u ${SSHKEY_PRIVATE} ${DIRECTORY_HOST_SHARED}/${CONTAINER}
+cp -u ${GIT_REMOTE_SSHKEYPRIVATE} ${DIRECTORY_HOST_SHARED}/${CONTAINER}
 
 DOCKER_RUN_COMMAND="docker run -v ${DIRECTORY_HOST_SHARED}/${CONTAINER}:${DIRECTORY_CONTAINER_SHARED} ${DOCKERHUB_ID}/${CONTAINER} ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT}"
 

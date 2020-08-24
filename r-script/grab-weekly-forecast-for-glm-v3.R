@@ -9,7 +9,7 @@ library(stringr)
 library(yaml)
 
 config = "/root/flare/shared/flare-config.yml"
-container = "flare-external-driver-interface-noaa"
+container = "flare-download-noaa-dev"
 output_directory = "/root/flare/shared/test-data/"
 
 #Read Config File

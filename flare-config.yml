@@ -1,30 +1,26 @@
-### Configuration File for CIBR-FLARE Project
-# General settings will be overwritten by container settings if different.
+# Configuration File for CIBR-FLARE Project
 
 ## General Settings
-ssh-key:
-  private:
 git:
   remote:
     server: github.com
     branch: master
-    user:
-      name:
-      email:
-## flare-external-driver-interface-noaa
-flare-external-driver-interface-noaa:
-  noaa:
-    site:
-      name: fcre
-      latitude: 37.27
-      longitude: 79.9
-  git:
-    ssh-key:
-      private:
-    remote:
-      server: github.com
-      repository: FLARE-forecast/test-data
-      branch: flare-external-driver-interface-noaa
-      user:
-        name:
-        email:
+    ssh-key-private:
+    user-name:
+    user-email:
+## Container Settings
+flare-download-noaa-dev:
+  site:
+    name: fcre
+    latitude: 37.27
+    longitude: 79.9
+    output:
+      git:
+        remote:
+        - server: github.com
+          repository: FLARE-forecast/test-data
+          branch: flare-download-noaa
+          ssh-key-private:
+          user-name:
+          user-email:
+parameters:

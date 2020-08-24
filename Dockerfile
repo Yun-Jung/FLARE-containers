@@ -1,4 +1,8 @@
-FROM rocker/r-base
+FROM rocker/tidyverse:4.0.0-ubuntu18.04
+
+# Set Environment Variables
+ENV TZ=America/New_York
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Install Dependencies
 RUN apt-get -yq update && \
@@ -7,15 +11,14 @@ RUN apt-get -yq update && \
 	libxml2-dev \
 	libcurl4-openssl-dev \
 	libssl-dev \
-	ssh && \
+	ssh \
+	tzdata \
+	vim  && \
 	R -e "install.packages(c('rNOMADS', 'RCurl', 'stringr', 'yaml'))" && \
-	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64 
+	wget -O https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
 
-# Get flare-container.sh
-RUN mkdir /root/flare && \
-	wget -O /root/flare/flare-container.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/flare-container.sh && \
-	wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/main.sh && \
-	chmod +x /usr/bin/yq /root/flare/flare-container.sh
-
-# Get NOAA Downloader Script
-RUN wget -O /root/flare/grab-weekly-forecast-for-glm-v3.R https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/flare-external-driver-interface-noaa/grab-weekly-forecast-for-glm-v3.R
+# Copy Files to Container
+RUN mkdir -p /root/flare/r-script/
+COPY flare-container.sh main.sh /root/flare/
+RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
+COPY r-scripts/grab-weekly-forecast-for-glm-v3.R /root/flare/r-script/
