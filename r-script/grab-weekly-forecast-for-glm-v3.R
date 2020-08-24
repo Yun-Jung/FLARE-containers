@@ -1,8 +1,3 @@
-#if (!"rNOMADS" %in% installed.packages()) install.packages("rNOMADS")
-#if (!"RCurl" %in% installed.packages()) install.packages("RCurl")
-#if (!"stringr" %in% installed.packages()) install.packages("stringr")
-#if (!"yaml" %in% installed.packages()) install.packages("yaml")
-
 library(rNOMADS)
 library(RCurl)
 library(stringr)
