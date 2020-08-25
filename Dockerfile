@@ -15,7 +15,7 @@ RUN apt-get -yq update && \
 	tzdata \
 	vim  && \
 	R -e "install.packages(c('rNOMADS', 'RCurl', 'stringr', 'yaml'))" && \
-	wget -O https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
+	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
 
 # Copy Files to Container
 RUN mkdir -p /root/flare/r-script/
