@@ -21,4 +21,4 @@ RUN apt-get -yq update && \
 RUN mkdir -p /root/flare/r-script/
 COPY flare-container.sh main.sh /root/flare/
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-COPY r-scripts/grab-weekly-forecast-for-glm-v3.R /root/flare/r-script/
+COPY r-script/grab-weekly-forecast-for-glm-v3.R /root/flare/r-script/
