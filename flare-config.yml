@@ -1,5 +1,4 @@
 # Configuration File for CIBR-FLARE Project
-
 ## General Settings
 git:
   remote:
@@ -23,4 +22,10 @@ flare-download-noaa-dev:
           ssh-key-private:
           user-name:
           user-email:
-parameters:
+## Parameters to Be Set in R
+# parameters:
+#   group1:
+#     parameter1: value1
+#     parameter2: value2
+#   group2:
+#     parameter3: value3
