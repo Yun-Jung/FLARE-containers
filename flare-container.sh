@@ -105,9 +105,11 @@ RSCRIPT="grab-weekly-forecast-for-glm-v3.R"
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.ssh-key-private)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote.server)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote.repository)
 
 # Extract Directory Name from Remote Repository Name
-GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${SITE_SCRIPTS_GIT_REMOTE_REPOSITORY}))
+GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))
 
 # Extract Private SSH Key File Name from Full Path
 GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRIVATE})
@@ -115,7 +117,7 @@ GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRI
 # Setup SSH
 mkdir -p /root/.ssh
 cp -u ${DIRECTORY_CONTAINER_SHARED}/${GIT_REMOTE_SSHKEYPRIVATE_FILE} /root/.ssh/id_rsa
-ssh-keyscan ${SITE_SCRIPTS_GIT_REMOTE_SERVER} > /root/.ssh/known_hosts
+ssh-keyscan ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER} > /root/.ssh/known_hosts
 
 # Setup Git
 git config --global user.name ${GIT_REMOTE_USERNAME}

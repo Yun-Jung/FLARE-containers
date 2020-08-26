@@ -19,9 +19,6 @@ flare-download-noaa-dev:
         - server: github.com
           repository: FLARE-forecast/test-data
           branch: flare-download-noaa
-          ssh-key-private:
-          user-name:
-          user-email:
 ## Parameters to Be Set in R
 # parameters:
 #   group1:
