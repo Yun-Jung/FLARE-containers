@@ -107,6 +107,7 @@ GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.rem
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.ssh-key-private)
 CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote[0].server)
 CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote[0].repository)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote[0].branch)
 
 # Extract Directory Name from Remote Repository Name
 GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))
@@ -125,13 +126,13 @@ git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 cd ${DIRECTORY_CONTAINER_SHARED}
 # Check If the Directory Is There and Is the Right Git Directory and Clone the Git Repository If Doesn't Exist
-([ -d ${GIT_DIRECTORY} ] && is_right_git_dir ${GIT_DIRECTORY}) || git clone git@${GIT_REMOTE_SERVER}:${GIT_REMOTE_REPOSITORY}
+([ -d ${GIT_DIRECTORY} ] && is_right_git_dir ${GIT_DIRECTORY}) || git clone git@${CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER}:${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}
 
 cd ${GIT_DIRECTORY}
-git checkout ${GIT_REMOTE_BRANCH}
+git checkout ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH}
 
 # Push Any Previously Uncommited Changes
-git_push_if_required "${TIMESTAMP} - Add Previously Uncommited Changes"
+git_push_if_required "${TIMESTAMP} - Add Previously Unstaged Changes"
 
 git pull --no-edit
 
