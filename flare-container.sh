@@ -94,6 +94,11 @@ if [[ "${arg_h:?}" = "1" ]]; then
   help "Help using ${0}"
 fi
 
+# OpenWhisk mode
+if [[ "${arg_o:?}" = "1" ]]; then
+  echo "Running in OpenWhisk Mode..."
+fi
+
 
 ### User-defined and Runtime
 ##############################################################################
@@ -134,7 +139,8 @@ git checkout ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH}
 # Push Any Previously Uncommited Changes
 git_push_if_required "${TIMESTAMP} - Add Previously Unstaged Changes"
 
-git pull --no-edit
+# Bypass Git Pull in OpenWhisk Mode
+[[ "${arg_o:?}" = "1" ]] || git pull --no-edit
 
 # Run R Script
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT}
