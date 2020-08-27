@@ -35,6 +35,7 @@ read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
   -d --debug       Enables debug mode
   -h --help        This page
   -n --no-color    Disable color output
+  -o --openwhisk   Enables OpenWhisk mode
 EOF
 
 # shellcheck disable=SC2034
