@@ -21,6 +21,12 @@ MAIN_SCRIPT="main.sh"
 DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
 
+# Bypass sudo Command for root
+sudo ()
+{
+    ([[ $EUID = 0 ]] && "$@") || command sudo "$@"
+}
+
 # Setup Flare Directory on the Host
 sudo mkdir -p ${DIRECTORY_HOST}/${CONTAINER} ${DIRECTORY_HOST_SHARED}/${CONTAINER}
 sudo chown -R $USER:$USER ${DIRECTORY_HOST}

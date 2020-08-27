@@ -93,6 +93,11 @@ if [[ "${arg_h:?}" = "1" ]]; then
   help "Help using ${0}"
 fi
 
+# OpenWhisk mode
+if [[ "${arg_o:?}" = "1" ]]; then
+  echo "Running in OpenWhisk Mode..."
+fi
+
 
 ### User-defined and Runtime
 ##############################################################################
