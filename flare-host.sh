@@ -101,7 +101,7 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-CONTAINER_NAME=$(yq r ${DIRECTORY_HOST_SHARED}/${CONFIG_FILE} container.name)
+CONTAINER_NAME=$(basename ${__dir})
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
 
 cp -u ${GIT_REMOTE_SSHKEYPRIVATE} ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}
