@@ -27,8 +27,6 @@
 # - We do not bash-expand defaults, so setting '~/app' as a default will not resolve to ${HOME}.
 #   you can use bash variables to work around this (so use ${HOME} instead)
 
-CONTAINER="flare-download-noaa-dev"
-
 # shellcheck disable=SC2034
 read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
   -v               Enable verbose mode, print script as it is executed
@@ -40,7 +38,7 @@ EOF
 
 # shellcheck disable=SC2034
 read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
-  'flare-host' script for '${CONTAINER}' container
+  'flare-host' script for '${CONTAINER_NAME}' container
 EOF
 
 # shellcheck source=main.sh
@@ -103,10 +101,11 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER}/${CONFIG_FILE} git.remote.ssh-key-private)
+CONTAINER_NAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.name)
+GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
 
-cp -u ${GIT_REMOTE_SSHKEYPRIVATE} ${DIRECTORY_HOST_SHARED}/${CONTAINER}
+cp -u ${GIT_REMOTE_SSHKEYPRIVATE} ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}
 
 # Run Container Script in Manual or OpenWhisk Mode
-([[ "${arg_o:?}" = "1" ]] && cp -r ${DIRECTORY_HOST_SHARED}/${CONTAINER} ${DIRECTORY_CONTAINER_SHARED} && ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT}) \
-  || docker run -v ${DIRECTORY_HOST_SHARED}/${CONTAINER}:${DIRECTORY_CONTAINER_SHARED} ${DOCKERHUB_ID}/${CONTAINER} ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT}
+([[ "${arg_o:?}" = "1" ]] && cp -r ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME} ${DIRECTORY_CONTAINER_SHARED} && ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT}) \
+  || docker run -v ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}:${DIRECTORY_CONTAINER_SHARED} ${DOCKERHUB_ID}/${CONTAINER_NAME} ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT}

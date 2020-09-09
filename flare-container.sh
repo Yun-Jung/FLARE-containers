@@ -27,8 +27,6 @@
 # - We do not bash-expand defaults, so setting '~/app' as a default will not resolve to ${HOME}.
 #   you can use bash variables to work around this (so use ${HOME} instead)
 
-CONTAINER="flare-download-noaa-dev"
-
 # shellcheck disable=SC2034
 read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
   -v               Enable verbose mode, print script as it is executed
@@ -40,7 +38,7 @@ EOF
 
 # shellcheck disable=SC2034
 read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
-  'flare-container' script for '${CONTAINER}' container
+  'flare-container' script for '${CONTAINER_NAME}' container
 EOF
 
 # shellcheck source=main.sh
@@ -108,12 +106,13 @@ cd ${DIRECTORY_CONTAINER}
 
 RSCRIPT="grab-weekly-forecast-for-glm-v3.R"
 
+CONTAINER_NAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.name)
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.ssh-key-private)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote[0].server)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote[0].repository)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.output.git.remote[0].branch)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER_NAME}.site.output.git.remote[0].server)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER_NAME}.site.output.git.remote[0].repository)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER_NAME}.site.output.git.remote[0].branch)
 
 # Extract Directory Name from Remote Repository Name
 GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))

@@ -8,7 +8,8 @@ git:
     user-name:
     user-email:
 ## Container Settings
-flare-download-noaa-dev:
+container:
+  name: flare-download-noaa-dev
   site:
     name: fcre
     latitude: 37.27
