@@ -17,7 +17,7 @@ MAIN_SCRIPT="main.sh"
 DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
 
-CONTAINER_NAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.name)
+CONTAINER_NAME=${1}
 CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER_NAME}/flare-config.yml
 HOST_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER_NAME}/flare-host.sh
 MAIN_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER_NAME}/main.sh
