@@ -15,11 +15,12 @@ RUN apt-get -yq update && \
 	tzdata \
 	vim  && \
 	R -e "install.packages(c('rNOMADS', 'RCurl', 'stringr', 'yaml'))" && \
+	R -e "install.packages('http://r-forge.r-project.org/scm/viewvc.php/*checkout*/trunk/rNOMADS/rNOMADS_2.5.0.tar.gz?revision=102&root=rnomads', repos = NULL, type ='source')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
 
 # Copy Files to Container
 RUN mkdir -p /root/flare/r-script/
 COPY flare-container.sh /root/flare/
-RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh 
+RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
 COPY r-script/grab-weekly-forecast-for-glm-v3.R /root/flare/r-script/
