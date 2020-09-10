@@ -10,7 +10,7 @@ output_directory = "/root/flare/shared"
 config = yaml.load_file(config_file)
 
 git_directory = basename(config[["container"]][["site"]][["output"]][["git"]][["remote"]][[1]][["repository"]])
-print(git_directory)
+
 #User defined location of interest and directory
 lake_lat_n_list = c(config[["container"]][["site"]][["latitude"]])
 lake_lon_w_list = c(config[["container"]][["site"]][["longitude"]])
@@ -19,7 +19,6 @@ lake_lon_w_list = c(config[["container"]][["site"]][["longitude"]])
 lake_name_list = c(config[["container"]][["site"]][["name"]])
 
 directory = paste(output_directory, "/", git_directory, "/", sep = "")
-print(directory)
 if(!file.exists(directory)) {
   dir.create(file.path(directory))
 }
