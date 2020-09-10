@@ -20,6 +20,6 @@ RUN apt-get -yq update && \
 # Copy Files to Container
 RUN mkdir -p /root/flare/r-script/
 COPY flare-container.sh /root/flare/
-RUN wget -O /root/flare/ https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh 
+RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh 
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
 COPY r-script/grab-weekly-forecast-for-glm-v3.R /root/flare/r-script/
