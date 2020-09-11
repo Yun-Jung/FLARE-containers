@@ -9,17 +9,12 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-download-noaa-dev
+  name: flare-download-data-dev
   site:
-    name: fcre
-    latitude: 37.27
-    longitude: 79.9
+    name: Falling Creek Reservoir
+    code: fcre
     output:
-      git:
-        remote:
-        - server: github.com
-          repository: FLARE-forecast/test-data
-          branch: flare-download-noaa
+      directory: fcre
 ## Parameters to Be Set in R
 # parameters:
 #   group1:
@@ -27,3 +22,34 @@ container:
 #     parameter2: value2
 #   group2:
 #     parameter3: value3
+lake_name_code: fcre
+lake_name: Falling Creek Reservoir
+noaa_location: flare-download-noaa-dev/test-data/fcre
+realtime_insitu_location:
+  git:
+  remote:
+    server: github.com
+    repository: FLARE-forecast/FCRE-data
+    branch: fcre-catwalk-data
+    directory:
+realtime_met_station_location:
+  git:
+  remote:
+    server: github.com
+    repository: FLARE-forecast/FCRE-data
+    branch: fcre-metstation-data
+    directory:
+manual_data_location:
+  git:
+  remote:
+    server: github.com
+    repository: FLARE-forecast/FCRE-data
+    branch: fcre-manual-data
+    directory:
+realtime_inflow_data_location:
+  git:
+  remote:
+    server: github.com
+    repository: FLARE-forecast/FCRE-data
+    branch: fcre-weir-data
+    directory:

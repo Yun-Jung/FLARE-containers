@@ -104,7 +104,7 @@ fi
 
 cd ${DIRECTORY_CONTAINER}
 
-RSCRIPT="grab-weekly-forecast-for-glm-v3.R"
+RSCRIPT="01_download_data.R"
 
 CONTAINER_NAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.name)
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-name)
