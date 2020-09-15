@@ -27,7 +27,7 @@
 # - We do not bash-expand defaults, so setting '~/app' as a default will not resolve to ${HOME}.
 #   you can use bash variables to work around this (so use ${HOME} instead)
 
-CONTAINER="flare-download-noaa-dev"
+CONTAINER="flare-download-noaa"
 
 # shellcheck disable=SC2034
 read -r -d '' __usage <<-'EOF' || true # exits non-zero when EOF encountered
