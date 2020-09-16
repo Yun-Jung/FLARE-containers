@@ -4,18 +4,17 @@ library(stringr)
 library(yaml)
 
 config = "/root/flare/shared/flare-config.yml"
-container = "flare-download-noaa"
 output_directory = "/root/flare/shared/test-data/"
 
 #Read Config File
 config=yaml.load_file(config)
 
 #User defined location of interest and directory
-lake_lat_n_list = c(config[[container]][["site"]][["latitude"]])
-lake_lon_w_list = c(config[[container]][["site"]][["longitude"]])
+lake_lat_n_list = c(config[["container"]][["site"]][["latitude"]])
+lake_lon_w_list = c(config[["container"]][["site"]][["longitude"]])
 #Degrees west (does not currently work for sites in eastern hemisphere)
 
-lake_name_list = c(config[[container]][["site"]][["name"]])
+lake_name_list = c(config[["container"]][["site"]][["name"]])
 
 directory = output_directory
 if(!file.exists(directory)) {
