@@ -4,7 +4,7 @@ library(stringr)
 library(yaml)
 
 config = "/root/flare/shared/flare-config.yml"
-container = "flare-download-noaa-dev"
+container = "flare-download-noaa"
 output_directory = "/root/flare/shared/test-data/"
 
 #Read Config File
