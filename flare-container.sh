@@ -123,4 +123,4 @@ git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 # Run R Script
-Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT}
+Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
