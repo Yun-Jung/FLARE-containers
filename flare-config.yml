@@ -10,11 +10,6 @@ git:
 ## Container Settings
 container:
   name: flare-download-data-dev
-  site:
-    name: Falling Creek Reservoir
-    code: fcre
-    output:
-      directory: fcre
 ## Parameters to Be Set in R
 # parameters:
 #   group1:

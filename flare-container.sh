@@ -106,13 +106,13 @@ cd ${DIRECTORY_CONTAINER}
 
 RSCRIPT="01_download_data.R"
 
-CONTAINER_NAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.name)
-GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-name)
-GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-email)
-GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.ssh-key-private)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.site.output.git.remote[0].server)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.site.output.git.remote[0].repository)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.site.output.git.remote[0].branch)
+CONTAINER_NAME=${1}
+GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
+GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
+GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote[0].server)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote[0].repository)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote[0].branch)
 
 # Extract Directory Name from Remote Repository Name
 GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))
@@ -136,14 +136,5 @@ cd ${DIRECTORY_CONTAINER_SHARED}
 cd ${GIT_DIRECTORY}
 git checkout ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH}
 
-# Push Any Previously Uncommited Changes
-git_push_if_required "${TIMESTAMP} - Add Previously Unstaged Changes"
-
-# Bypass Git Pull in OpenWhisk Mode
-[[ "${arg_o:?}" = "1" ]] || git pull --no-edit
-
 # Run R Script
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT}
-
-# Push Any New Changes
-git_push_if_required "${TIMESTAMP} - Add NOAA Forecast"

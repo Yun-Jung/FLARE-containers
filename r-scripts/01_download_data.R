@@ -1,13 +1,13 @@
-library(stringr)
 library(yaml)
 
-config_file = "/root/flare/shared/flare-config.yml"
+config_file = "/root/flare/shared/flare-download-data-dev/flare-config.yml"
 output_directory = "/root/flare/shared"
 
 #Read Config File
 #config = yaml.load_file(config_file)
 config <- yaml::read_yaml(config_file)
-
+print(config)
+data_location = "/root/flare/shared/flare-download-data-dev"
 config$data_location <- data_location
 
 if(!file.exists(file.path(config$data_location, config$realtime_insitu_location))){

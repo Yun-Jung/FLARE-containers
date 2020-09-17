@@ -14,12 +14,12 @@ RUN apt-get -yq update && \
 	ssh \
 	tzdata \
 	vim  && \
-	R -e "install.packages(c('rNOMADS', 'RCurl', 'stringr', 'yaml'), repos = 'https://cloud.r-project.org')" && \
+	R -e "install.packages(c('yaml'), repos = 'https://cloud.r-project.org')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
 
 # Copy Files to Container
-RUN mkdir -p /root/flare/r-script/
+RUN mkdir -p /root/flare/r-scripts/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-COPY r-script/01_download_data.R /root/flare/r-script/
+COPY r-scripts/01_download_data.R /root/flare/r-scripts/
