@@ -110,12 +110,6 @@ CONTAINER_NAME=${1}
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote[0].server)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote[0].repository)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote[0].branch)
-
-# Extract Directory Name from Remote Repository Name
-GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))
 
 # Extract Private SSH Key File Name from Full Path
 GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRIVATE})
@@ -123,18 +117,10 @@ GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRI
 # Setup SSH
 mkdir -p /root/.ssh
 cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE_FILE} /root/.ssh/id_rsa
-ssh-keyscan ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER} > /root/.ssh/known_hosts
 
 # Setup Git
 git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
-
-cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}
-# Check If the Directory Is There and Is the Right Git Directory and Clone the Git Repository If Doesn't Exist
-([ -d ${GIT_DIRECTORY} ] && is_right_git_dir ${GIT_DIRECTORY}) || git clone git@${CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER}:${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}
-
-cd ${GIT_DIRECTORY}
-git checkout ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH}
 
 # Run R Script
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT}
