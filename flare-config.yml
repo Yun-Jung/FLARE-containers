@@ -10,13 +10,17 @@ git:
 ## Container Settings
 container:
   name: flare-download-data-dev
-## Parameters to Be Set in R
-# parameters:
-#   group1:
-#     parameter1: value1
-#     parameter2: value2
-#   group2:
-#     parameter3: value3
+  working-directory:
+    server: 192.168.20.20
+    repository: FLARE-forecast/test-data
+    branch: master
+    directory: fcre
+    pre-run:
+      pull: FALSE
+    post-run:
+      push: FALSE
+
+## Parameters
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
 noaa_location: flare-download-noaa-dev/test-data/fcre
