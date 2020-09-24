@@ -26,29 +26,29 @@ lake_name: Falling Creek Reservoir
 noaa_location: flare-download-noaa-dev/test-data/fcre
 realtime_insitu_location:
   git:
-  remote:
-    server: github.com
-    repository: FLARE-forecast/FCRE-data
-    branch: fcre-catwalk-data
-    directory:
+    remote:
+      server: github.com
+      repository: FLARE-forecast/FCRE-data
+      branch: fcre-catwalk-data
+      directory:
 realtime_met_station_location:
   git:
-  remote:
-    server: github.com
-    repository: FLARE-forecast/FCRE-data
-    branch: fcre-metstation-data
-    directory:
+    remote:
+      server: github.com
+      repository: FLARE-forecast/FCRE-data
+      branch: fcre-metstation-data
+      directory:
 manual_data_location:
   git:
-  remote:
-    server: github.com
-    repository: FLARE-forecast/FCRE-data
-    branch: fcre-manual-data
-    directory:
+    remote:
+      server: github.com
+      repository: FLARE-forecast/FCRE-data
+      branch: fcre-manual-data
+      directory:
 realtime_inflow_data_location:
   git:
-  remote:
-    server: github.com
-    repository: FLARE-forecast/FCRE-data
-    branch: fcre-weir-data
-    directory:
+    remote:
+      server: github.com
+      repository: FLARE-forecast/FCRE-data
+      branch: fcre-weir-data
+      directory:

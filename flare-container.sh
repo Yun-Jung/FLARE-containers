@@ -102,11 +102,18 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
+# Pulls from Git Repo
+# TODO: Make it more readable.
+# TODO: Cover corner cases such as wrong directory with the same name already exists.
+# Usage: git_pull location config_file
+function git_pull() {
+  ([ -d $(yq r ${2} ${1}.git.remote.branch) ] && cd $(yq r ${2} ${1}.git.remote.branch) && git pull && cd ..) || git clone --branch $(yq r ${2} ${1}.git.remote.branch) --depth 1 git@$(yq r ${2} ${1}.git.remote.server):$(yq r ${2} ${1}.git.remote.repository) $(yq r ${2} ${1}.git.remote.branch)
+}
+
 cd ${DIRECTORY_CONTAINER}
 
-RSCRIPT="01_download_data.R"
-
 CONTAINER_NAME=${1}
+GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.server)
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
@@ -117,10 +124,19 @@ GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRI
 # Setup SSH
 mkdir -p /root/.ssh
 cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE_FILE} /root/.ssh/id_rsa
+# TODO: Add All Remote Servers to known_hosts
+ssh-keyscan ${GIT_REMOTE_SERVER} > /root/.ssh/known_hosts
 
 # Setup Git
 git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
-# Run R Script
-Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
+cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}
+# Check If the Directory Is There and Is the Right Git Directory and Clone the Git Repository If Doesn't Exist
+git_pull realtime_insitu_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE}
+git_pull realtime_met_station_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE}
+git_pull manual_data_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE}
+git_pull realtime_inflow_data_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE}
+
+NOAALOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_location)
+cd ${DIRECTORY_CONTAINER_SHARED}/${NOAALOCATION} && git pull && cd ..
