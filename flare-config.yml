@@ -15,11 +15,8 @@ container:
     repository: FLARE-forecast/test-data
     branch: master
     directory: fcre
-    pre-run:
-      pull: FALSE
-    post-run:
-      push: FALSE
-
+    pre-run-pull: FALSE
+    post-run-push: FALSE
 ## Parameters
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
