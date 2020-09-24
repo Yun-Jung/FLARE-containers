@@ -102,11 +102,9 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-cd ${DIRECTORY_CONTAINER}
-
-RSCRIPT="02_process_observations.R"
-
 CONTAINER_NAME=${1}
+LAKE_NAME_CODE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} lake_name_code)
+RSCRIPT="02_process_observations.R"
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
@@ -123,4 +121,4 @@ git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 # Run R Script
-Rscript ${DIRECTORY_CONTAINER}/${RSCRIPT_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
+Rscript ${DIRECTORY_CONTAINER}/${LAKE_NAME_CODE}/${RSCRIPT} ${CONTAINER_NAME}

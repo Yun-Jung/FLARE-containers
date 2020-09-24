@@ -18,8 +18,8 @@ RUN apt-get -yq update && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
 
 # Copy Files to Container
-RUN mkdir -p /root/flare/r-scripts/
+RUN mkdir -p /root/flare/fcre
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-ADD r-scripts /root/flare/r-scripts/
+ADD fcre /root/flare/fcre/

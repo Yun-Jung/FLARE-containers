@@ -1,6 +1,6 @@
-#!/usr/bin/env Rscript
-
-library(yaml)
+lake_directory <- "fcre"
+data_location <- "shared/flare-download-data-dev"
+qaqc_data_location <- file.path(data_location, "fcre-manual-data")
 
 config <- yaml::read_yaml(file.path(lake_directory,"data_processing","observation_processing.yml"))
 
