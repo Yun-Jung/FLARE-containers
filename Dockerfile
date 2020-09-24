@@ -22,4 +22,4 @@ RUN mkdir -p /root/flare/r-scripts/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-COPY r-scripts/01_download_data.R /root/flare/r-scripts/
+ADD r-scripts /root/flare/r-scripts/

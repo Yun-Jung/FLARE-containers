@@ -104,7 +104,7 @@ fi
 
 cd ${DIRECTORY_CONTAINER}
 
-RSCRIPT="01_download_data.R"
+RSCRIPT="02_process_observations.R"
 
 CONTAINER_NAME=${1}
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
