@@ -156,7 +156,7 @@ wget --no-verbose --show-progress --progress=bar:force:noscroll --no-clobber $(y
   --header='Sec-Fetch-Mode: navigate' \
   --header='Sec-Fetch-Dest: document' \
   --header='Accept-Language: en-US,en;q=0.9,fa;q=0.8' \
-  --output-document $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.data.manual-download[0].file-name) || true
+  --output-document $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-download[0].file-name) || true
 
 NOAA_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_location)
 cd ${DIRECTORY_CONTAINER_SHARED}/${NOAA_LOCATION} && git pull && cd ..
