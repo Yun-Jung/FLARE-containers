@@ -144,5 +144,19 @@ git_pull realtime_met_station_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER
 git_pull manual_data_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE}
 git_pull realtime_inflow_data_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE}
 
-NOAALOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_location)
-cd ${DIRECTORY_CONTAINER_SHARED}/${NOAALOCATION} && git pull && cd ..
+MANUAL_DOWNLOAD_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.git.remote.branch)/$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.git.remote.directory)
+cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${MANUAL_DOWNLOAD_LOCATION}
+wget --no-verbose --show-progress --progress=bar:force:noscroll --no-clobber $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-download[0].url) \
+  --header='Connection: keep-alive' \
+  --header='Cache-Control: max-age=0' \
+  --header='Upgrade-Insecure-Requests: 1' \
+  --header='User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \
+  --header='Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  --header='Sec-Fetch-Site: cross-site' \
+  --header='Sec-Fetch-Mode: navigate' \
+  --header='Sec-Fetch-Dest: document' \
+  --header='Accept-Language: en-US,en;q=0.9,fa;q=0.8' \
+  --output-document $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} ${CONTAINER}.site.data.manual-download[0].file-name) || true
+
+NOAA_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_location)
+cd ${DIRECTORY_CONTAINER_SHARED}/${NOAA_LOCATION} && git pull && cd ..
