@@ -42,7 +42,7 @@ manual_data_location:
       repository: FLARE-forecast/FCRE-data
       branch: fcre-manual-data
       directory:
-  manual-download:
+  manual-downloads:
   - url: https://portal.edirepository.org/nis/dataviewer?packageid=edi.389.4&entityid=c1db8816742823eba86696b29f106d0f
     file-name: Met_final_2015_2019.csv
 realtime_inflow_data_location:

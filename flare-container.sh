@@ -147,7 +147,7 @@ git_pull realtime_inflow_data_location ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER
 
 MANUAL_DOWNLOAD_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.git.remote.branch)/$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.git.remote.directory)
 cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${MANUAL_DOWNLOAD_LOCATION}
-wget --no-verbose --show-progress --progress=bar:force:noscroll --no-clobber $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-download[0].url) \
+wget --no-verbose --show-progress --progress=bar:force:noscroll --no-clobber $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-downloads[0].url) \
   --header='Connection: keep-alive' \
   --header='Cache-Control: max-age=0' \
   --header='Upgrade-Insecure-Requests: 1' \
@@ -157,7 +157,7 @@ wget --no-verbose --show-progress --progress=bar:force:noscroll --no-clobber $(y
   --header='Sec-Fetch-Mode: navigate' \
   --header='Sec-Fetch-Dest: document' \
   --header='Accept-Language: en-US,en;q=0.9,fa;q=0.8' \
-  --output-document $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-download[0].file-name) || true
+  --output-document $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-downloads[0].file-name) || true
 
 NOAA_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_location)
 cd ${DIRECTORY_CONTAINER_SHARED}/${NOAA_LOCATION} && git pull && cd ..
