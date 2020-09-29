@@ -9,7 +9,7 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-download-data-dev
+  name: flare-process-observations-dev
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
