@@ -11,14 +11,14 @@ git:
 container:
   name: flare-download-data-dev
   working-directory:
+    pre-run-pull: FALSE
+    post-run-push: FALSE
     git:
       remote:
         server: 192.168.20.20
         repository: FLARE-forecast/test-data
         branch: master
         directory: fcre
-        pre-run-pull: FALSE
-        post-run-push: FALSE
 ## Parameters
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
