@@ -11,12 +11,14 @@ git:
 container:
   name: flare-download-data-dev
   working-directory:
-    server: 192.168.20.20
-    repository: FLARE-forecast/test-data
-    branch: master
-    directory: fcre
     pre-run-pull: FALSE
     post-run-push: FALSE
+    git:
+      remote:
+        server: 192.168.20.20
+        repository: FLARE-forecast/test-data
+        branch: master
+        directory: fcre
 
 ##########################
 # Lake information
