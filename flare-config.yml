@@ -19,6 +19,9 @@ container:
         repository: FLARE-forecast/test-data
         branch: master
         directory: fcre
+        ssh-key-private:
+        user-name:
+        user-email:
 ## Parameters
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
