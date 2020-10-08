@@ -10,6 +10,19 @@ git:
 ## Container Settings
 container:
   name: flare-download-noaa-dev
+  working-directory:
+    pre-run-pull: FALSE
+    post-run-push: FALSE
+    git:
+      remote:
+        server: 192.168.20.20
+        port:
+        repository: FLARE-forecast/test-data
+        branch: master
+        directory: fcre
+        ssh-key-private:
+        user-name:
+        user-email:
   site:
     name: fcre
     latitude: 37.27
@@ -17,13 +30,11 @@ container:
     output:
       git:
         remote:
-        - server: github.com
+          server: github.com
+          port:
           repository: FLARE-forecast/test-data
           branch: flare-download-noaa
-## Parameters to Be Set in R
-# parameters:
-#   group1:
-#     parameter1: value1
-#     parameter2: value2
-#   group2:
-#     parameter3: value3
+          directory:
+          ssh-key-private:
+          user-name:
+          user-email:
