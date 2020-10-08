@@ -22,4 +22,4 @@ RUN mkdir -p /root/flare/rscripts/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-COPY rscripts/grab-weekly-forecast-for-glm-v3.R /root/flare/r-script/
+COPY rscripts/grab-weekly-forecast-for-glm-v3.R /root/flare/rscripts/

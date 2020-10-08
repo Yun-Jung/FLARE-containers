@@ -3,7 +3,7 @@ library(RCurl)
 library(stringr)
 library(yaml)
 
-config_file = "/root/flare/shared/flare-config.yml"
+config_file = "/root/flare/shared/flare-download-noaa-dev/flare-config.yml"
 output_directory = "/root/flare/shared"
 
 #Read Config File
