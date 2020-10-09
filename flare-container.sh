@@ -104,47 +104,5 @@ fi
 
 RSCRIPT="grab-weekly-forecast-for-glm-v3.R"
 
-cd ${DIRECTORY_CONTAINER}
-
-CONTAINER_NAME=${1}
-GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.server)
-GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
-GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
-GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote.server)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote.repository)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.site.output.git.remote.branch)
-
-# Extract Directory Name from Remote Repository Name
-GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))
-
-# Extract Private SSH Key File Name from Full Path
-GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRIVATE})
-
-# Setup SSH
-mkdir -p /root/.ssh
-cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE_FILE} /root/.ssh/id_rsa
-ssh-keyscan ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER} > /root/.ssh/known_hosts
-
-# Setup Git
-git config --global user.name ${GIT_REMOTE_USERNAME}
-git config --global user.email ${GIT_REMOTE_USEREMAIL}
-
-cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}
-# Check If the Directory Is There and Is the Right Git Directory and Clone the Git Repository If Doesn't Exist
-([ -d ${GIT_DIRECTORY} ] && is_right_git_dir ${GIT_DIRECTORY}) || git clone git@${CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER}:${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}
-
-cd ${GIT_DIRECTORY}
-git checkout ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH}
-
-# Push Any Previously Uncommited Changes
-git_push_if_required "${TIMESTAMP} - Add Previously Unstaged Changes"
-
-# Bypass Git Pull in OpenWhisk Mode
-[[ "${arg_o:?}" = "1" ]] || git pull --no-edit
-
 # Run R Script
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT}
-
-# Push Any New Changes
-git_push_if_required "${TIMESTAMP} - Add NOAA Forecast"
