@@ -16,7 +16,7 @@ container:
     git:
       remote:
         server: 192.168.20.20
-        port: 
+        port:
         repository: FLARE-forecast/test-data
         branch: master
         directory: fcre
@@ -26,7 +26,7 @@ container:
 ## Parameters
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
-noaa_location: flare-download-noaa-dev/test-data/fcre
+noaa_location: flare-download-noaa-dev/fcre
 realtime_insitu_location:
   git:
     remote:
