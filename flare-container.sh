@@ -233,8 +233,8 @@ wget --no-verbose --show-progress --progress=bar:force:noscroll --no-clobber $(y
   --output-document $(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} manual_data_location.manual-downloads[0].file-name) || true
 
 NOAA_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_location)
-cd ${DIRECTORY_CONTAINER_SHARED}/${NOAA_LOCATION} && git pull && cd ..
-
+# No Need to Pull NOAA Data If flare-download-noaa Container Has Already Been Run Successfully
+#cd ${DIRECTORY_CONTAINER_SHARED}/${NOAA_LOCATION} && git pull && cd ..
 
 # post push work dir
 if [[ "${arg_o:?}" = "1" ]] && [[ "${POST_RUN_PUSH_WORKDIR:?}" = "True" ]]; then
