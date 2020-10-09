@@ -13,8 +13,9 @@ RUN apt-get -yq update && \
 	libssl-dev \
 	ssh \
 	tzdata \
-	vim  && \
-	R -e "install.packages(c('yaml', 'remotes'), repos = 'https://cloud.r-project.org')" && \
+	vim  \
+	libnetcdf-dev && \
+	R -e "install.packages(c('yaml', 'remotes', 'imputeTS', 'rMR', 'stinepack'), repos = 'https://cloud.r-project.org')" && \
 	R -e "remotes::install_github('rqthomas/noaaGEFSpoint')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
 
