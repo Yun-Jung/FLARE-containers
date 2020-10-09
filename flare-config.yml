@@ -27,14 +27,3 @@ container:
     name: fcre
     latitude: 37.27
     longitude: 79.9
-    output:
-      git:
-        remote:
-          server: github.com
-          port:
-          repository: FLARE-forecast/test-data
-          branch: flare-download-noaa
-          directory:
-          ssh-key-private:
-          user-name:
-          user-email:

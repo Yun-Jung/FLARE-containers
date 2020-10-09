@@ -4,21 +4,20 @@ library(stringr)
 library(yaml)
 
 config_file = "/root/flare/shared/flare-download-noaa-dev/flare-config.yml"
-output_directory = "/root/flare/shared"
+directory = "/root/flare/shared/flare-download-noaa-dev/"
 
 #Read Config File
 config = yaml.load_file(config_file)
 
-git_directory = basename(config[["container"]][["site"]][["output"]][["git"]][["remote"]][["repository"]])
+site_name = config$container$site$name
 
 #User defined location of interest and directory
-lake_lat_n_list = c(config[["container"]][["site"]][["latitude"]])
-lake_lon_w_list = c(config[["container"]][["site"]][["longitude"]])
+lake_lat_n_list = c(config$site$latitude)
+lake_lon_w_list = c(config$site$longitude)
 #Degrees west (does not currently work for sites in eastern hemisphere)
 
-lake_name_list = c(config[["container"]][["site"]][["name"]])
+lake_name_list = c(config$container$site$name)
 
-directory = paste(output_directory, "/", git_directory, "/", sep = "")
 if(!file.exists(directory)) {
   dir.create(file.path(directory))
 }
