@@ -115,7 +115,7 @@ function pull_workdir() {
   REMOTE_PORT=$2
   LAKE=$3
   CONTAINER=$4
-  USERNAME=$5 
+  USERNAME=$5
 
   ssh-keyscan -p ${REMOTE_PORT} -t rsa ${REMOTE_SERVER} >> ~/.ssh/known_hosts
   cd ${DIRECTORY_HOST}
@@ -130,7 +130,7 @@ function pull_workdir() {
   if [ -f "config.tar.gz" ]; then
       tar -xzvf config.tar.gz
       # echo "{\"hello\":$(<flare-config.yml)}"
-      if [ -f "flare-config.yml" ]; then 
+      if [ -f "flare-config.yml" ]; then
           cp flare-config.yml ${DIRECTORY_HOST_SHARED}/${CONTAINER}/flare-config.yml
       fi
   fi
@@ -141,8 +141,8 @@ function push_workdir() {
   REMOTE_PORT=$2
   LAKE=$3
   CONTAINER=$4
-  USERNAME=$5 
-  
+  USERNAME=$5
+
   TIMESTAMP=$(date +"%d_%m_%y")
   ssh-keyscan -p ${REMOTE_PORT} -t rsa ${REMOTE_SERVER} >> ~/.ssh/known_hosts
 
@@ -163,6 +163,8 @@ function push_workdir() {
   git commit -m "$(date +"%D %T") - Add NOAA Forecast"
   git push gitlab ${CONTAINER}
 }
+
+CONTAINER_NAME=${1}
 
 PRE_RUN_PULL_WORKDIR=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.working-directory.pre-run-pull)
 POST_RUN_PUSH_WORKDIR=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} container.working-directory.post-run-push)
