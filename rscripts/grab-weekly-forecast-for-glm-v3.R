@@ -12,8 +12,8 @@ config = yaml.load_file(config_file)
 site_name = config$container$site$name
 
 #User defined location of interest and directory
-lake_lat_n_list = c(config$site$latitude)
-lake_lon_w_list = c(config$site$longitude)
+lake_lat_n_list = c(config$container$site$latitude)
+lake_lon_w_list = c(config$container$site$longitude)
 #Degrees west (does not currently work for sites in eastern hemisphere)
 
 lake_name_list = c(config$container$site$name)
