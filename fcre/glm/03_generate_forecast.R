@@ -1,6 +1,9 @@
 ##### Read configuration files
 
-#forecast_location <- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE_package/flare_lakes/fcre/glm/"
+forecast_location <- "/root/flare/fcre/glm/"
+data_location <- "/root/flare/shared/flare-download-data-dev"
+qaqc_data_location <- file.path(data_location, "fcre-manual-data")
+
 config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))
 run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","run_configuration.yml"))
 
@@ -139,4 +142,3 @@ flare::create_flare_eml(file_name = saved_file,
                         enkf_output)
 
 unlist(config$run_config$execute_location, recursive = TRUE)
-

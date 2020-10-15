@@ -1,5 +1,5 @@
-qaqc_data_location: /Users/quinn/Dropbox/Research/SSC_forecasting/run_flare_package/qaqc_data
-data_location: /Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data
+#qaqc_data_location: /Users/quinn/Dropbox/Research/SSC_forecasting/run_flare_package/qaqc_data
+#data_location: /Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data
 
 ##########################
 # Lake information
@@ -40,9 +40,9 @@ metadata:
 model_name: glm_aed #other is "null"
 
 base_GLM_nml: configuration_files/glm3.nml
-base_AED_nml: .na 
-base_AED_phyto_pars_nml:  .na 
-base_AED_zoop_pars_nml:  .na 
+base_AED_nml: .na
+base_AED_phyto_pars_nml:  .na
+base_AED_zoop_pars_nml:  .na
 
 #All sources of uncertainty and data used to constrain
 use_obs_constraint: TRUE
@@ -68,7 +68,7 @@ modeled_depths: [0.10, 0.33, 0.67,
                 7.00, 7.33, 7.67,
                 8.00, 8.33, 8.67,
                 9.00]
-                
+
 ##############################
 ##  EnKF setup
 ##############################
@@ -101,7 +101,7 @@ states_config_file: states_config.csv
 
 diagnostics_names:  [extc_coef,
                      rad]
-                     
+
 ### Initialization and Inflow generation.  Not used by run_enkf_forecast()
 
 use_future_inflow: TRUE
@@ -117,6 +117,3 @@ the_sals_init: 0.0
 default_snow_thickness_init: 0.0
 default_white_ice_thickness_init: 0.0
 default_blue_ice_thickness_init: 0.0
-
-
-

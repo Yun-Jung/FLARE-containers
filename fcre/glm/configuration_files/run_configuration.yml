@@ -8,5 +8,5 @@ forecast_start_day_local: 2019-05-01
 forecast_horizon: 16
 forecast_project_id: test_glm
 forecast_sss_on: FALSE
-forecast_location: /Users/quinn/Dropbox/Research/SSC_forecasting/FLARE_package/flare_lakes/fcre/glm
-execute_location: /Volumes/ramdisk/working_directory
+#forecast_location: /Users/quinn/Dropbox/Research/SSC_forecasting/FLARE_package/flare_lakes/fcre/glm
+execute_location: /root/flare/shared/flare-generate-forecast-dev/working_directory
