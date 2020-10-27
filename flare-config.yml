@@ -18,7 +18,7 @@ container:
         server: 192.168.20.20
         port:
         repository: FLARE-forecast/test-data
-        branch: master
+        branch: flare-download-noaa
         directory: fcre
 
 ##########################
