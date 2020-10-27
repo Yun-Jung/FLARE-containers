@@ -112,9 +112,9 @@ CONTAINER_NAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.nam
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} git.remote.ssh-key-private)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.site.output.git.remote[0].server)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.site.output.git.remote[0].repository)
-CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.site.output.git.remote[0].branch)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_SERVER=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.working-directory.git.remote.server)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.working-directory.git.remote.repository)
+CONTAINER_SITE_OUTPUT_GIT_REMOTE_BRANCH=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONFIG_FILE} container.working-directory.git.remote.branch)
 
 # Extract Directory Name from Remote Repository Name
 GIT_DIRECTORY=$(awk -F. '{print $1}' <<< $(awk -F/ '{print $NF}' <<< ${CONTAINER_SITE_OUTPUT_GIT_REMOTE_REPOSITORY}))
