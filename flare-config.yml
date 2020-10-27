@@ -10,20 +10,23 @@ git:
 ## Container Settings
 container:
   name: flare-download-noaa
-  site:
-    name: fcre
-    latitude: 37.27
-    longitude: 79.9
-    output:
-      git:
-        remote:
-        - server: github.com
-          repository: FLARE-forecast/test-data
-          branch: flare-download-noaa
-## Parameters to Be Set in R
-# parameters:
-#   group1:
-#     parameter1: value1
-#     parameter2: value2
-#   group2:
-#     parameter3: value3
+  working-directory:
+    pre-run-pull: FALSE
+    post-run-push: FALSE
+    git:
+      remote:
+        server: 192.168.20.20
+        port:
+        repository: FLARE-forecast/test-data
+        branch: master
+        directory: fcre
+
+##########################
+# Lake information
+###########################
+
+lake_name_code: fcre
+lake_name: Falling Creek Reservoir
+lake_latitude: 37.307   #Degrees North
+lake_longitude: 79.837  #Degrees West
+local_tzone: "EST"### Configuration File for CIBR-FLARE Project
