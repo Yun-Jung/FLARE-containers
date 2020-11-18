@@ -21,7 +21,6 @@ container:
         branch:
         directory:
 ## Parameters
-output_directory: /root/flare/shared
 site_file: noaa_download_site_list.csv
 downscale: TRUE
 run_parallel: TRUE

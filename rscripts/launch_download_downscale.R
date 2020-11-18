@@ -2,14 +2,15 @@
 #these directories won't change on container
 print(paste("Running NOAA scripts starting at:", as.character(Sys.time())))
 
-configuration_yaml <- "/root/flare/shared/flare-download-noaa-2.0-dev/flare-config.yml"
+configuration_yaml <- file.path("/root/flare/shared", config_file$container$name, "flare-config.yml")
+output_directory <- file.path("/root/flare/shared", config_file$container$name)
 
 #Read configuration file
 config_file <- yaml::read_yaml(configuration_yaml)
 output_directory <- config_file$output_directory
 
 #Read list of latitude and longitudes
-neon_sites <- readr::read_csv(file.path("/root/flare/", config_file$site_file))
+neon_sites <- readr::read_csv(file.path("/root/flare", config_file$site_file))
 site_list <- neon_sites$site_id
 lat_list <- neon_sites$latitude
 lon_list <- neon_sites$longitude
