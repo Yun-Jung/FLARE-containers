@@ -9,21 +9,22 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-download-noaa-dev
+  name: flare-download-noaa-2.0-dev
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
     git:
       remote:
-        server: 192.168.20.20
-        port:
-        repository: FLARE-forecast/test-data
-        branch: master
-        directory: fcre
-        ssh-key-private:
-        user-name:
-        user-email:
-  site:
-    name: fcre
-    latitude: 37.27
-    longitude: 79.9
+        server:
+        repository:
+        branch:
+        directory:
+## Parameters
+output_directory: /root/flare/shared
+site_file: noaa_download_site_list.csv
+downscale: TRUE
+run_parallel: TRUE
+overwrite: FALSE
+num_cores: 8
+forecast_date: all
+forecast_time: all

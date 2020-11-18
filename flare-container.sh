@@ -102,7 +102,7 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-RSCRIPT="grab-weekly-forecast-for-glm-v3.R"
+RSCRIPT="launch_download_downscale.R"
 
 # Run R Script
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT}
