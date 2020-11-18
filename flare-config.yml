@@ -16,6 +16,7 @@ container:
     git:
       remote:
         server:
+        port:
         repository:
         branch:
         directory:

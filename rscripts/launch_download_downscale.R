@@ -2,8 +2,7 @@
 #these directories won't change on container
 print(paste("Running NOAA scripts starting at:", as.character(Sys.time())))
 
- <- "/root/flare/shared"
-configuration_yaml <- "/root/flare/shared/flare-config.yml"
+configuration_yaml <- "/root/flare/shared/flare-download-noaa-2.0-dev/flare-config.yml"
 
 #Read configuration file
 config_file <- yaml::read_yaml(configuration_yaml)
