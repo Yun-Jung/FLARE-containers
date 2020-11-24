@@ -1,4 +1,4 @@
-FROM rocker/tidyverse:4.0.0-ubuntu18.04
+FROM rocker/tidyverse:4.0.3
 
 # Set Environment Variables
 ENV TZ=America/New_York
@@ -17,7 +17,7 @@ RUN apt-get -yq update && \
 	libnetcdf-dev && \
 	R -e "install.packages(c('yaml', 'remotes', 'imputeTS', 'rMR'), repos = 'https://cloud.r-project.org')" && \
 	R -e "remotes::install_github('rqthomas/noaaGEFSpoint')" && \
-	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
+	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 
 # Copy Files to Container
 RUN mkdir -p /root/flare/fcre
