@@ -84,3 +84,4 @@ if(!is.null(config$specified_inflow2)){
 if(!is.null(config$specified_outflow1)){
   file.copy(file.path(config$data_location,config$specified_outflow1), file.path(config$qaqc_data_location,basename(config$specified_outflow1)))
 }
+
