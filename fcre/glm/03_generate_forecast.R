@@ -9,7 +9,6 @@ run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files"
 
 config$run_config <- run_config
 config$run_config$forecast_location <- forecast_location
-#config$run_config$execute_location <- file.path(forecast_location,"working_directory")
 
 if(!dir.exists(config$run_config$execute_location)){
   dir.create(config$run_config$execute_location)
@@ -49,15 +48,15 @@ forecast_hour <- lubridate::hour(forecast_start_datetime_UTC)
 if(forecast_hour < 10){forecast_hour <- paste0("0",forecast_hour)}
 forecast_path <- file.path(config$data_location, "NOAAGEFS_1hr",config$lake_name_code,lubridate::as_date(forecast_start_datetime_UTC),forecast_hour)
 
-
-
 met_file_names <- flare::generate_glm_met_files(obs_met_file = observed_met_file,
                                                 out_dir = config$run_config$execute_location,
                                                 forecast_dir = forecast_path,
                                                 local_tzone = config$local_tzone,
                                                 start_datetime_local = start_datetime_local,
                                                 end_datetime_local = end_datetime_local,
-                                                forecast_start_datetime = forecast_start_datetime_local)
+                                                forecast_start_datetime = forecast_start_datetime_local,
+                                                use_forecasted_met = TRUE)
+
 
 #Inflow Drivers (already done)
 
@@ -74,7 +73,8 @@ inflow_outflow_files <- flare::create_glm_inflow_outflow_files(inflow_file = cle
                                                                future_inflow_flow_error = config$future_inflow_flow_error,
                                                                future_inflow_temp_coeff = config$future_inflow_temp_coeff,
                                                                future_inflow_temp_error = config$future_inflow_temp_error,
-                                                               use_future_inflow = config$use_future_inflow)
+                                                               use_future_inflow = config$use_future_inflow,
+                                                               state_names = states_config$state_names)
 
 inflow_file_names <- inflow_outflow_files$inflow_file_name
 outflow_file_names <- inflow_outflow_files$outflow_file_name
@@ -92,16 +92,23 @@ full_time_forecast <- seq(start_datetime_local, end_datetime_local, by = "1 day"
 obs[ , which(full_time_forecast >= forecast_start_datetime_local), ] <- NA
 
 
-tmp <- flare::generate_states_to_obs_mapping(states_config, obs_config)
-states_config$states_to_obs_mapping <- tmp$states_to_obs_mapping
-states_config$states_to_obs <- tmp$states_to_obs
+states_config <- flare::generate_states_to_obs_mapping(states_config, obs_config)
+
+model_sd <- flare::initiate_model_error(config, states_config, forecast_location)
 
 #Set inital conditions
-init <- flare::generate_initial_conditions(states_config,
-                                           obs_config,
-                                           pars_config,
-                                           obs,
-                                           config)
+if(is.na(run_config$restart_file)){
+  init <- flare::generate_initial_conditions(states_config,
+                                             obs_config,
+                                             pars_config,
+                                             obs,
+                                             config)
+}else{
+  init <- flare::generate_restart_initial_conditions(
+    restart_file = run_config$restart_file,
+    state_names = states_config$state_names,
+    par_names = pars_config$par_names_save)
+}
 
 aux_states_init <- list()
 aux_states_init$snow_ice_thickness <- init$snow_ice_thickness
@@ -118,7 +125,7 @@ enkf_output <- flare::run_enkf_forecast(states_init = init$states,
                                aux_states_init = aux_states_init,
                                obs = obs,
                                obs_sd = obs_config$obs_sd,
-                               model_sd = states_config$model_sd,
+                               model_sd = model_sd,
                                working_directory = config$run_config$execute_location,
                                met_file_names = met_file_names,
                                inflow_file_names = inflow_file_names,
@@ -142,3 +149,8 @@ flare::create_flare_eml(file_name = saved_file,
                         enkf_output)
 
 unlist(config$run_config$execute_location, recursive = TRUE)
+
+run_config$start_day_local <- run_config$forecast_start_day_local
+run_config$forecast_start_day_local <- as.character(lubridate::as_date(run_config$forecast_start_day_local) + lubridate::days(1))
+run_config$restart_file <- saved_file
+yaml::write_yaml(run_config, file = file.path(forecast_location, "configuration_files","run_configuration.yml"))

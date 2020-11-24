@@ -1,7 +1,3 @@
-lake_directory <- "fcre"
-data_location <- "shared/flare-download-data-dev"
-qaqc_data_location <- file.path(data_location, "fcre-manual-data")
-
 config <- yaml::read_yaml(file.path(lake_directory,"data_processing","observation_processing.yml"))
 
 config$data_location <- data_location
@@ -84,3 +80,4 @@ if(!is.null(config$specified_inflow2)){
 if(!is.null(config$specified_outflow1)){
   file.copy(file.path(config$data_location,config$specified_outflow1), file.path(config$qaqc_data_location,basename(config$specified_outflow1)))
 }
+
