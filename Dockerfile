@@ -15,13 +15,13 @@ RUN apt-get -yq update && \
 	tzdata \
 	vim  \
 	libnetcdf-dev \
-	libv8-3.14.5 \
 	libjq-dev \
-	libudunits2-dev && \
+	libudunits2-dev \
+	libnode-dev && \
 	R -e "install.packages(c('yaml', 'remotes', 'imputeTS', 'rMR', 'stinepack'), repos = 'https://cloud.r-project.org')" && \
 	R -e "remotes::install_github('rqthomas/noaaGEFSpoint')" && \
-	R -e "remotes::install_github('rqthomas/EFIstandards')" && \
-	R -e "remotes::install_github('rqthomas/flare')" && \
+	R -e "remotes::install_github('eco4cast/EFIstandards')" && \
+	R -e "remotes::install_github('flare-forecast/flare')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 
 # Copy Files to Container
