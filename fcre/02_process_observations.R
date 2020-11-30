@@ -1,5 +1,5 @@
 lake_directory <- "/root/flare/fcre"
-data_location <- "/root/flare/shared/flare-download-data-dev"
+data_location <- "/root/flare/shared/flare-download-data-2.0-dev"
 qaqc_data_location <- file.path(data_location, "fcre-processed-data")
 
 config <- yaml::read_yaml(file.path(lake_directory,"data_processing","observation_processing.yml"))
