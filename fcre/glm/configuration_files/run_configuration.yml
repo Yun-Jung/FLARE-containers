@@ -7,5 +7,5 @@ forecast_horizon: 16.0
 forecast_project_id: wrr_runs
 sim_name: wrr_runs
 forecast_sss_on: no
-forecast_location: /root/flare/shared/flare-generate-forecast-2.0-dev/forecasts
+forecast_location: /root/flare/fcre/glm
 execute_location: /root/flare/shared/flare-generate-forecast-2.0-dev/working_directory

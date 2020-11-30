@@ -1,3 +1,8 @@
+forecast_location <- "/root/flare/fcre/glm"
+data_location <- "/root/flare/shared/flare-download-data-2.0-dev"
+lake_directory <- "/root/flare/fcre"
+qaqc_location <- "/root/flare/shared/flare-download-data-2.0-dev"
+
 #### Move to 03_forecast_inflows.R
 config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))
 run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","run_configuration.yml"))
@@ -185,4 +190,3 @@ run_config$start_day_local <- run_config$forecast_start_day_local
 run_config$forecast_start_day_local <- as.character(lubridate::as_date(run_config$forecast_start_day_local) + lubridate::days(1))
 run_config$restart_file <- saved_file
 yaml::write_yaml(run_config, file = file.path(forecast_location, "configuration_files","run_configuration.yml"))
-
