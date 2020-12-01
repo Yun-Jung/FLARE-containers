@@ -2,7 +2,7 @@ forecast_location <- "/root/flare/fcre/glm"
 data_location <- "/root/flare/shared/flare-download-data-2.0-dev"
 noaa_location <- "/root/flare/shared/flare-download-noaa-2.0-dev"
 lake_directory <- "/root/flare/fcre"
-qaqc_data_location <- "/root/flare/shared/flare-download-data-2.0-dev/fcre-manual-data"
+qaqc_data_location <- "/root/flare/shared/flare-download-data-2.0-dev/fcre-processed-data"
 
 #### Move to 03_forecast_inflows.R
 config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))

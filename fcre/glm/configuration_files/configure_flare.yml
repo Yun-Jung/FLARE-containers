@@ -1,4 +1,4 @@
-qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-manual-data
+qaqc_data_location: /root/flare/shared/flare-download-data-2.0-dev/fcre-processed-data
 data_location: /root/flare/shared/flare-download-data-2.0-dev
 
 ##########################
