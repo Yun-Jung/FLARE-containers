@@ -17,7 +17,8 @@ RUN apt-get -yq update && \
 	libnetcdf-dev \
 	libjq-dev \
 	libudunits2-dev \
-	libnode-dev && \
+	libnode-dev \
+	libgd-dev && \
 	R -e "install.packages(c('yaml', 'remotes', 'imputeTS', 'rMR', 'stinepack'), repos = 'https://cloud.r-project.org')" && \
 	R -e "remotes::install_github('rqthomas/noaaGEFSpoint')" && \
 	R -e "remotes::install_github('eco4cast/EFIstandards')" && \

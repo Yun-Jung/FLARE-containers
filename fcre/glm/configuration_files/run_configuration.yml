@@ -1,4 +1,4 @@
-restart_file: na
+restart_file: .na
 start_day_local: '2020-11-14'
 start_time_local: '07:00:00'
 end_day_local: .na
