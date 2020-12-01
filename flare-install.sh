@@ -8,7 +8,7 @@
 #  Running on the host:               ./flare-install.sh
 #  Running directly from the web:     wget -O - https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER_NAME}/flare-install.sh | /usr/bin/env bash -s ${CONTAINER_NAME}
 
-YQ_URL=https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64
+YQ_URL=https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 YQ=/usr/bin/yq
 
 CONFIG="flare-config.yml"
