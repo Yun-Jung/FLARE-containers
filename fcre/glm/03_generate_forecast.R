@@ -4,6 +4,8 @@ noaa_location <- "/root/flare/shared/flare-download-noaa-2.0-dev"
 lake_directory <- "/root/flare/fcre"
 qaqc_data_location <- "/root/flare/shared/flare-download-data-2.0-dev/fcre-processed-data"
 
+library(dplyr)
+
 #### Move to 03_forecast_inflows.R
 config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))
 run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","run_configuration.yml"))
@@ -58,6 +60,7 @@ if(!dir.exists(config$run_config$execute_location)){
 }
 
 config$data_location <- data_location
+config$noaa_location <- noaa_location
 config$qaqc_data_location <- qaqc_data_location
 
 pars_config <- readr::read_csv(file.path(config$run_config$forecast_location, "configuration_files", config$par_file), col_types = readr::cols())
@@ -89,7 +92,7 @@ end_datetime_UTC <-  lubridate::with_tz(end_datetime_local, tzone = "UTC")
 forecast_start_datetime_UTC <- lubridate::with_tz(forecast_start_datetime_local, tzone = "UTC")
 forecast_hour <- lubridate::hour(forecast_start_datetime_UTC)
 if(forecast_hour < 10){forecast_hour <- paste0("0",forecast_hour)}
-forecast_path <- file.path(config$data_location, "NOAAGEFS_1hr",config$lake_name_code,lubridate::as_date(forecast_start_datetime_UTC),forecast_hour)
+forecast_path <- file.path(config$noaa_location, "NOAAGEFS_1hr",config$lake_name_code,lubridate::as_date(forecast_start_datetime_UTC),forecast_hour)
 
 met_file_names <- flare::generate_glm_met_files(obs_met_file = observed_met_file,
                                                 out_dir = config$run_config$execute_location,
