@@ -1,4 +1,5 @@
-forecast_location <- "/root/flare/fcre/glm"
+model_location <- "/root/flare/fcre/glm"
+forecast_location <- "/root/flare/shared/flare-generate-forecast-2.0-dev/forecast"
 data_location <- "/root/flare/shared/flare-download-data-2.0-dev"
 noaa_location <- "/root/flare/shared/flare-download-noaa-2.0-dev"
 lake_directory <- "/root/flare/fcre"
