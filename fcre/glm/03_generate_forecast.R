@@ -8,8 +8,8 @@ qaqc_data_location <- "/root/flare/shared/flare-process-observations-2.0-dev/fcr
 library(dplyr)
 
 #### Move to 03_forecast_inflows.R
-config <- yaml::read_yaml(file.path(model_location, "configuration_files","configure_flare.yml"))
-run_config <- yaml::read_yaml(file.path(model_location, "configuration_files","run_configuration.yml"))
+config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))
+run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","run_configuration.yml"))
 
 config$run_config <- run_config
 config$run_config$model_location <- model_location
@@ -51,7 +51,7 @@ forecast_inflows_outflows(inflow_obs = file.path(config$qaqc_data_location, "/in
 
 ##### Read configuration files
 config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))
-run_config <- yaml::read_yaml(file.path(model_location, "configuration_files","run_configuration.yml"))
+run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","run_configuration.yml"))
 
 config$run_config <- run_config
 config$run_config$forecast_location <- forecast_location
