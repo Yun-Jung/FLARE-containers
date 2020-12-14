@@ -1,6 +1,6 @@
 lake_directory <- "/root/flare/fcre"
 data_location <- "/root/flare/shared/flare-download-data-2.0-dev"
-qaqc_data_location <- file.path(data_location, "fcre-processed-data")
+qaqc_data_location <- "/root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data"
 dir.create(qaqc_data_location)
 
 config <- yaml::read_yaml(file.path(lake_directory,"data_processing","observation_processing.yml"))
