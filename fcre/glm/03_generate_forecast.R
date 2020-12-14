@@ -3,7 +3,7 @@ forecast_location <- "/root/flare/shared/flare-generate-forecast-2.0-dev/forecas
 data_location <- "/root/flare/shared/flare-download-data-2.0-dev"
 noaa_location <- "/root/flare/shared/flare-download-noaa-2.0-dev"
 lake_directory <- "/root/flare/fcre"
-qaqc_data_location <- "/root/flare/shared/flare-download-data-2.0-dev/fcre-processed-data"
+qaqc_data_location <- "/root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data"
 
 library(dplyr)
 
