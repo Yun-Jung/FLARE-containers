@@ -7,8 +7,8 @@ qaqc_data_location <- "/root/flare/shared/flare-process-observations-2.0-dev/fcr
 
 config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","configure_flare.yml"))
 run_config <- yaml::read_yaml(file.path(forecast_location, "configuration_files","run_configuration.yml"))
+saved_file <- run_config$restart_file
 
-saved_file < run_config$restart_file
 #file_name <- saved_file
 flare::plotting_general(file_name = saved_file,
                         qaqc_location = qaqc_data_location)
