@@ -64,9 +64,9 @@ config$data_location <- data_location
 config$noaa_location <- noaa_location
 config$qaqc_data_location <- qaqc_data_location
 
-pars_config <- readr::read_csv(file.path(config$run_config$model_location, "configuration_files", config$par_file), col_types = readr::cols())
-obs_config <- readr::read_csv(file.path(config$run_config$model_location, "configuration_files", config$obs_config_file), col_types = readr::cols())
-states_config <- readr::read_csv(file.path(config$run_config$model_location, "configuration_files", config$states_config_file), col_types = readr::cols())
+pars_config <- readr::read_csv(file.path(config$run_config$forecast_location, "configuration_files", config$par_file), col_types = readr::cols())
+obs_config <- readr::read_csv(file.path(config$run_config$forecast_location, "configuration_files", config$obs_config_file), col_types = readr::cols())
+states_config <- readr::read_csv(file.path(config$run_config$forecast_location, "configuration_files", config$states_config_file), col_types = readr::cols())
 
 # Set up timings
 start_datetime_local <- lubridate::as_datetime(paste0(config$run_config$start_day_local," ",config$run_config$start_time_local), tz = config$local_tzone)
@@ -195,4 +195,4 @@ unlist(config$run_config$execute_location, recursive = TRUE)
 run_config$start_day_local <- run_config$forecast_start_day_local
 run_config$forecast_start_day_local <- as.character(lubridate::as_date(run_config$forecast_start_day_local) + lubridate::days(1))
 run_config$restart_file <- saved_file
-yaml::write_yaml(run_config, file = file.path(model_location, "configuration_files","run_configuration.yml"))
+yaml::write_yaml(run_config, file = file.path(forecast_location, "configuration_files","run_configuration.yml"))
