@@ -131,7 +131,7 @@ obs <- flare::create_obs_matrix(cleaned_observations_file_long,
 
 #Set observations in the "future" to NA
 full_time_forecast <- seq(start_datetime_local, end_datetime_local, by = "1 day")
-obs[ , which(full_time_forecast >= forecast_start_datetime_local), ] <- NA
+obs[ , which(full_time_forecast > forecast_start_datetime_local), ] <- NA
 
 
 states_config <- flare::generate_states_to_obs_mapping(states_config, obs_config)
