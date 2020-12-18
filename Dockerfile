@@ -26,8 +26,8 @@ RUN apt-get -yq update && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 
 # Copy Files to Container
-RUN mkdir -p /root/flare/fcre
+RUN mkdir -p /root/flare/flare_lake_examples/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-ADD fcre /root/flare/fcre/
+ADD flare_lake_examples/ /root/flare/flare_lake_examples/

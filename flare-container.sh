@@ -103,8 +103,9 @@ fi
 ##############################################################################
 
 CONTAINER_NAME=${1}
+LAKES_DIRECTORY=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} lakes_directory)
 LAKE_NAME_CODE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} lake_name_code)
-RSCRIPT="glm/03_generate_forecast.R"
+RSCRIPT="04_visualize.R"
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
@@ -121,4 +122,4 @@ git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 # Run R Script
-Rscript ${DIRECTORY_CONTAINER}/${LAKE_NAME_CODE}/${RSCRIPT} ${CONTAINER_NAME}
+Rscript ${DIRECTORY_CONTAINER}/${LAKES_DIRECTORY}/${LAKE_NAME_CODE}/${RSCRIPT} ${CONTAINER_NAME}

@@ -9,7 +9,7 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-generate-forecast-dev
+  name: flare-generate-forecast-2.0-dev
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
@@ -25,6 +25,7 @@ container:
 # Lake information
 ###########################
 
+lakes_directory: flare_lake_examples
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
 lake_latitude: 37.307   #Degrees North
