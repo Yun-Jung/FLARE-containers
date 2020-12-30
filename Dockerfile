@@ -22,7 +22,7 @@ RUN apt-get -yq update && \
 	R -e "install.packages(c('yaml', 'remotes', 'imputeTS', 'rMR', 'stinepack'), repos = 'https://cloud.r-project.org')" && \
 	R -e "remotes::install_github('rqthomas/noaaGEFSpoint')" && \
 	R -e "remotes::install_github('eco4cast/EFIstandards')" && \
-	R -e "remotes::install_github('flare-forecast/flare')" && \
+	R -e "remotes::install_github('flare-forecast/flare@368da65c3df396570c71b8072fe3fcb5ab0ea9fa')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 
 # Copy Files to Container
