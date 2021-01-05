@@ -9,7 +9,7 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-generate-forecast-2.0-dev
+  name: flare-generate-forecast-2.02-dev
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
@@ -21,18 +21,16 @@ container:
         branch: master
         directory: fcre
 ## Container Paths
-model_location: /root/flare/fcre/glm
-forecast_location: /root/flare/shared/flare-generate-forecast-2.0-dev/forecast
+qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data
 data_location: /root/flare/shared/flare-download-data-2.0-dev
 noaa_location: /root/flare/shared/flare-download-noaa-2.0-dev
 lake_directory: /root/flare/flare_lake_examples/fcre
-qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data
-
+forecast_location: /root/flare/shared/flare-generate-forecast-2.02-dev/forecast
+run_config: /root/flare/shared/flare-generate-forecast-2.02-dev/forecast/configuration_files/run_configuration.yml
 ##########################
 # Lake information
 ###########################
 
-lakes_directory: flare_lake_examples
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
 lake_latitude: 37.307   #Degrees North
@@ -95,7 +93,7 @@ future_inflow_flow_error: 0.00965
 future_inflow_temp_coeff: [0.20291, 0.94214, 0.04278]
 future_inflow_temp_error: 0.943
 
-forecast_met_model: NOAAGEFS_1hr-debias
+forecast_met_model: NOAAGEFS_1hr
 forecast_inflow_model: FLOWS-NOAAGEFS-AR1
 #########################
 ### Depth information
@@ -179,4 +177,3 @@ states_config_process_error: states_process_error.csv
 #######################################
 
 diagnostics_names:  [extc_coef]
-
