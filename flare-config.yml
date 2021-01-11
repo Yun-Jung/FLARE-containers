@@ -24,7 +24,7 @@ container:
 qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data
 lakes_directory: flare_lake_examples
 forecast_location: /root/flare/shared/flare-generate-forecast-2.03-dev/forecast
-run_config: /root/flare/shared/flare-visualize-2.03-dev/forecast/configuration_files/run_configuration.yml
+run_config: /root/flare/shared/flare-generate-forecast-2.03-dev/forecast/configuration_files/run_configuration.yml
 ## Lake Information
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
