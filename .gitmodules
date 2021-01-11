@@ -1,0 +1,3 @@
+[submodule "flare_lake_examples"]
+	path = flare_lake_examples
+	url = https://github.com/FLARE-forecast/flare_lake_examples.git
