@@ -109,6 +109,7 @@ RSCRIPT="glm/03_generate_forecast.R"
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
 GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
+FORECAST_LOCATION=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} forecast_location)
 
 # Extract Private SSH Key File Name from Full Path
 GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRIVATE})
@@ -120,6 +121,10 @@ cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE
 # Setup Git
 git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
+
+# Transfer Config Files
+mkdir -p ${FORECAST_LOCATION}
+mv /root/flare/${LAKES_DIRECTORY}/${LAKE_NAME_CODE}/glm/configuration_files/ ${FORECAST_LOCATION}/ || true
 
 # Run R Script
 # Pass `${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}` Argument to the R Script

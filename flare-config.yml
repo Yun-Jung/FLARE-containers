@@ -25,7 +25,6 @@ qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-p
 data_location: /root/flare/shared/flare-download-data-2.0-dev
 noaa_location: /root/flare/shared/flare-download-noaa-2.0-dev
 lakes_directory: flare_lake_examples
-lake_directory: /root/flare/flare_lake_examples/fcre
 forecast_location: /root/flare/shared/flare-generate-forecast-2.03-dev/forecast
 run_config: /root/flare/shared/flare-generate-forecast-2.03-dev/forecast/configuration_files/run_configuration.yml
 ##########################
