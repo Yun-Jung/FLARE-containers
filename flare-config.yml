@@ -20,6 +20,9 @@ container:
         repository: FLARE-forecast/test-data
         branch: master
         directory:
+## Container Paths
+flare_path: /root/flare
+flare_shared_path: /root/flare/shared
 ## Parameters
 site_file: noaa_download_site_list.csv
 downscale: TRUE

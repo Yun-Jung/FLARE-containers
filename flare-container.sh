@@ -103,6 +103,22 @@ fi
 ##############################################################################
 
 RSCRIPT="launch_download_downscale.R"
+CONTAINER_NAME=${1}
+GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
+GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
+GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
+
+# Extract Private SSH Key File Name from Full Path
+GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRIVATE})
+
+# Setup SSH
+mkdir -p /root/.ssh
+cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE_FILE} /root/.ssh/id_rsa
+
+# Setup Git
+git config --global user.name ${GIT_REMOTE_USERNAME}
+git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 # Run R Script
-Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT}
+# Pass `${CONTAINER_NAME}` Argument to the R Script
+Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
