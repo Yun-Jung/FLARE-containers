@@ -9,7 +9,7 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-process-observations-dev
+  name: flare-process-observations
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
@@ -23,8 +23,8 @@ container:
 ## Container Paths
 flare_path: /root/flare
 flare_shared_path: /root/flare/shared
-qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data
-data_location: /root/flare/shared/flare-download-data-2.0-dev
+qaqc_data_location: /root/flare/shared/flare-process-observations/fcre-processed-data
+data_location: /root/flare/shared/flare-download-data
 lakes_directory: flare_lake_examples
 
 ##########################
