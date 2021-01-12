@@ -9,16 +9,16 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-download-noaa-2.0-dev
+  name: flare-download-noaa
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
     git:
       remote:
-        server:
+        server: 192.168.20.20
         port:
-        repository:
-        branch:
+        repository: FLARE-forecast/test-data
+        branch: master
         directory:
 ## Parameters
 site_file: noaa_download_site_list.csv
