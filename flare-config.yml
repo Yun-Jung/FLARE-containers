@@ -21,6 +21,8 @@ container:
         branch: master
         directory: fcre
 ## Container Paths
+flare_path: /root/flare
+flare_shared_path: /root/flare/shared
 qaqc_data_location: /root/flare/shared/flare-process-observations-2.0-dev/fcre-processed-data
 data_location: /root/flare/shared/flare-download-data-2.0-dev
 noaa_location: /root/flare/shared/flare-download-noaa-2.0-dev
