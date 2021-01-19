@@ -124,7 +124,7 @@ git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 # Transfer Config Files
 mkdir -p ${FORECAST_LOCATION}
-mv /root/flare/${LAKES_DIRECTORY}/${LAKE_NAME_CODE}/glm/configuration_files/ ${FORECAST_LOCATION}/ || true
+cp -rn /root/flare/${LAKES_DIRECTORY}/${LAKE_NAME_CODE}/glm/configuration_files/ ${FORECAST_LOCATION}/
 
 # Run R Script
 # Pass `${CONTAINER_NAME}` Argument to the R Script
