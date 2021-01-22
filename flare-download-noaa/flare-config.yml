@@ -1,0 +1,37 @@
+### Configuration File for CIBR-FLARE Project
+## General Settings
+git:
+  remote:
+    server: github.com
+    branch: master
+    ssh-key-private:
+    user-name:
+    user-email:
+## Container Settings
+container:
+  name: flare-download-noaa
+  working-directory:
+    pre-run-pull: FALSE
+    post-run-push: FALSE
+    git:
+      remote:
+        server: 192.168.20.20
+        port:
+        repository: FLARE-forecast/test-data
+        branch: master
+        directory:
+## Container Paths
+flare_path: /root/flare
+flare_shared_path: /root/flare/shared
+## Parameters
+site_file: noaa_download_site_list.csv
+downscale: TRUE
+run_parallel: TRUE
+overwrite: FALSE
+num_cores: 8
+forecast_date: .na
+forecast_time: .na
+lake_name_code: fcre
+lake_name: Falling Creek Reservoir
+lake_latitude: 37.307   #Degrees North
+lake_longitude: 79.837  #Degrees West
