@@ -128,26 +128,25 @@ TODAY_DATE=$(date +%Y-%m-%d)
 END_DATE=$(date --date="+16 day" +%Y-%m-%d)
 
 # Create Path Variables
-FLODER=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
-FLODER_00=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/00
-FLODER_06=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/06
-FLODER_12=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/12
-FLODER_18=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/18
+FOLDER=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
+FOLDER_00=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/00
+FOLDER_06=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/06
+FOLDER_12=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/12
+FOLDER_18=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/18
 
 TRIGGER_FILE=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/trigger.txt
 WRITE_TRIGGER=true
 
-# Start to detect
 if [ ! -f "$TRIGGER_FILE" ]; then
     echo "Not triggered."
-    if [ -d "FLODER_00" -a -d "FLODER_06" -a -d "FLODER_12" -a -d "FLODER_18"]; then
-        echo "All Floders exist."
+    if [ -d "FOLDER_00" -a -d "FOLDER_06" -a -d "FOLDER_12" -a -d "FOLDER_18"]; then
+        echo "All Folders exist."
         for time in 00 06 12 18
         do
           echo "time: $time"
           for i in {0..9}
           do
-            FILE=${FLODER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens0${i}.nc
+            FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens0${i}.nc
             if [ ! -f "$FILE" ]; then
               echo "$FILE does not exist."
               WRITE_TRIGGER=false
@@ -156,7 +155,7 @@ if [ ! -f "$TRIGGER_FILE" ]; then
           done
           for i in {10..30}
           do
-            FILE=${FLODER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens${i}.nc
+            FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens${i}.nc
             if [ ! -f "$FILE" ]; then
               echo "$FILE does not exist."
               WRITE_TRIGGER=false
