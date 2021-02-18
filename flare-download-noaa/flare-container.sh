@@ -124,6 +124,9 @@ git config --global user.email ${GIT_REMOTE_USEREMAIL}
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
 
 # Create Date Variables
+NOT_DELETE_DATE3=$(date --date="-3 day" +%Y-%m-%d)
+NOT_DELETE_DATE2=$(date --date="-2 day" +%Y-%m-%d)
+NOT_DELETE_DATE1=$(date --date="-1 day" +%Y-%m-%d)
 TODAY_DATE=$(date +%Y-%m-%d)
 END_DATE=$(date --date="+16 day" +%Y-%m-%d)
 
@@ -164,8 +167,12 @@ if [ ! -f "$TRIGGER_FILE" ]; then
           done
         done
         if [ "$WRITE_TRIGGER" = true ] ; then
-          echo "Triggered" > trigger.txt
+          echo "Triggered" > ${FOLDER}/trigger.txt
           curl -u $AUTH https://$APIHOST/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fire -X POST -H "Content-Type: application/json"
         fi
     fi
 fi
+
+# Delete folders we don't need.
+cd ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
+rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
