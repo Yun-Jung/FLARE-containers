@@ -142,7 +142,7 @@ WRITE_TRIGGER=true
 
 if [ ! -f "$TRIGGER_FILE" ]; then
     echo "Not triggered."
-    if [ -d "FOLDER_00" -a -d "FOLDER_06" -a -d "FOLDER_12" -a -d "FOLDER_18"]; then
+    if [ -d "FOLDER_00" -a -d "FOLDER_06" -a -d "FOLDER_12" -a -d "FOLDER_18" ]; then
         echo "All Folders exist."
         for time in 00 06 12 18
         do
@@ -175,4 +175,6 @@ fi
 
 # Delete folders we don't need.
 cd ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
+shopt -s extglob
 rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
+shopt -u extglob
