@@ -140,17 +140,22 @@ FOLDER_18=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_D
 TRIGGER_FILE=${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/trigger.txt
 WRITE_TRIGGER=true
 
+# Create Openwhisk Variables
+APIHOST="js-129-114-104-10.jetstream-cloud.org"
+AUTH="d4558532-f53c-44cb-a4a0-3090cfd63880:fr7A1LGN1cA47u14Z37FVhIYLG7Z9pJLJwTM0Csn9bIL2DUvGFRF1NKpd9eXuqhQ"
+
 if [ ! -f "$TRIGGER_FILE" ]; then
     echo "Not triggered."
-    if [ -d "FOLDER_00" -a -d "FOLDER_06" -a -d "FOLDER_12" -a -d "FOLDER_18" ]; then
+    echo "${FOLDER_00}"
+    if [ -d "${FOLDER_00}" -a -d "${FOLDER_06}" -a -d "${FOLDER_12}" -a -d "${FOLDER_18}" ]; then
         echo "All Folders exist."
         for time in 00 06 12 18
         do
-          echo "time: $time"
+          echo "Start to check files in ${time} folders"
           for i in {0..9}
           do
             FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens0${i}.nc
-            if [ ! -f "$FILE" ]; then
+            if [ ! -f "${FILE}" ]; then
               echo "$FILE does not exist."
               WRITE_TRIGGER=false
               break
@@ -159,16 +164,17 @@ if [ ! -f "$TRIGGER_FILE" ]; then
           for i in {10..30}
           do
             FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens${i}.nc
-            if [ ! -f "$FILE" ]; then
+            if [ ! -f "${FILE}" ]; then
               echo "$FILE does not exist."
               WRITE_TRIGGER=false
               break
             fi
           done
         done
-        if [ "$WRITE_TRIGGER" = true ] ; then
-          echo "Triggered" > ${FOLDER}/trigger.txt
-          curl -u $AUTH https://$APIHOST/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fire -X POST -H "Content-Type: application/json"
+        if [ "${WRITE_TRIGGER}" = true ] ; then
+          echo "Triggered" | sudo tee -a ${FOLDER}/trigger.txt
+          curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
+          echo "Trigger Openwhisk"
         fi
     fi
 fi
@@ -176,5 +182,7 @@ fi
 # Delete folders we don't need.
 cd ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
 shopt -s extglob
+echo "Start to delete Folders"
 rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
 shopt -u extglob
+echo "Completed"
