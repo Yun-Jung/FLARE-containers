@@ -21,8 +21,10 @@ lat_list <- neon_sites$latitude
 lon_list <- neon_sites$longitude
 
 print(paste0("Site file: ", config$site_file))
+print(paste0("Read NOAA from Path: ", config$read_from_path))
 
-noaaGEFSpoint::noaa_gefs_download_downscale(site_list,
+noaaGEFSpoint::noaa_gefs_download_downscale(read_from_path = config$read_from_path,
+                                            site_list,
                                             lat_list,
                                             lon_list,
                                             output_directory,
