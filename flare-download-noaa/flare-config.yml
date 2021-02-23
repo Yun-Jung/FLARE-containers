@@ -23,6 +23,7 @@ container:
 ## Container Paths
 flare_path: /root/flare
 flare_shared_path: /root/flare/shared
+read_from_path: /root/flare/shared/qnoaa
 ## Parameters
 site_file: noaa_download_site_list.csv
 downscale: TRUE
