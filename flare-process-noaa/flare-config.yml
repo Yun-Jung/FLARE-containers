@@ -9,7 +9,7 @@ git:
     user-email:
 ## Container Settings
 container:
-  name: flare-download-noaa
+  name: flare-process-noaa
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
@@ -23,7 +23,7 @@ container:
 ## Container Paths
 flare_path: /root/flare
 flare_shared_path: /root/flare/shared
-read_from_path: /root/flare/shared/qnoaa
+read_from_path: /root/flare/shared/flare-download-noaa
 ## Parameters
 site_file: noaa_download_site_list.csv
 downscale: TRUE
