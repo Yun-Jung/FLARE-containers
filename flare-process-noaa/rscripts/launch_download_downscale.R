@@ -15,10 +15,9 @@ config <- yaml::read_yaml(file.path("/root/flare/shared", args[1], "flare-config
 output_directory <- file.path(config$flare_shared_path, config$container$name)
 
 #Read list of latitude and longitudes
-neon_sites <- readr::read_csv(file.path(config$flare_path, config$site_file))
-site_list <- neon_sites$site_id
-lat_list <- neon_sites$latitude
-lon_list <- neon_sites$longitude
+site_list <- config$lake_name_code
+lat_list <- config$lake_latitude
+lon_list <- config$lake_longitude
 
 print(paste0("Site file: ", config$site_file))
 print(paste0("Read NOAA from Path: ", config$read_from_path))
