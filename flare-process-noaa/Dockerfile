@@ -15,4 +15,3 @@ COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/main.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
 COPY rscripts/launch_download_downscale.R /root/flare/rscripts/
-COPY noaa_download_site_list.csv /root/flare/
