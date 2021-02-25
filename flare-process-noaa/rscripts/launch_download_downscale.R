@@ -19,8 +19,6 @@ site_list <- config$lake_name_code
 lat_list <- config$lake_latitude
 lon_list <- config$lake_longitude
 
-print(paste0("Read NOAA from Path: ", config$read_from_path))
-
 noaaGEFSpoint::noaa_gefs_download_downscale(read_from_path = config$read_from_path,
                                             site_list,
                                             lat_list,
