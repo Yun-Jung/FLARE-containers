@@ -33,10 +33,10 @@ sudo mkdir -p ${DIRECTORY_HOST}/${CONTAINER_NAME} ${DIRECTORY_HOST_SHARED}/${CON
 sudo chown -R $USER:$USER ${DIRECTORY_HOST}
 
 # Get Required Files
-sudo wget -O ${YQ} ${YQ_URL}
-wget -O ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/${CONFIG} ${CONFIG_URL}
-wget -O ${DIRECTORY_HOST}/${CONTAINER_NAME}/${HOST_SCRIPT} ${HOST_SCRIPT_URL}
-wget -O ${DIRECTORY_HOST}/${CONTAINER_NAME}/${MAIN_SCRIPT} ${MAIN_SCRIPT_URL}
+sudo wget ${YQ_URL} -O ${YQ}
+wget ${CONFIG_URL} -O ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/${CONFIG}
+wget ${HOST_SCRIPT_URL} -O ${DIRECTORY_HOST}/${CONTAINER_NAME}/${HOST_SCRIPT}
+wget ${COMMONS_SCRIPT_URL} -O ${DIRECTORY_HOST}/${CONTAINER_NAME}/${COMMONS_SCRIPT}
 sudo chmod +x ${YQ} ${DIRECTORY_HOST}/${CONTAINER_NAME}/${HOST_SCRIPT}
 
 # Set Default Value for ssh-key.private /home/$USER/.ssh/id_rsa (default for non-root), /root/.ssh/id_rsa (default for root)
