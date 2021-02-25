@@ -41,8 +41,8 @@ read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
   'flare-host' script for '${CONTAINER_NAME}' container
 EOF
 
-# shellcheck source=main.sh
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/main.sh"
+# shellcheck source=commons.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/commons.sh"
 
 
 ### Signal trapping and backtracing
