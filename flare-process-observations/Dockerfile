@@ -22,6 +22,6 @@ RUN apt-get -yq update && \
 	# Copy Files to Container
 	RUN mkdir -p /root/flare/flare_lake_examples/
 	COPY flare-container.sh /root/flare/
-	RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
+	RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/commons.sh
 	RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
 	ADD flare_lake_examples/ /root/flare/flare_lake_examples/
