@@ -6,21 +6,21 @@
 # Usage:
 #
 #  Running on the host:               ./flare-install.sh
-#  Running directly from the web:     wget -O - https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER_NAME}/flare-install.sh | /usr/bin/env bash -s ${CONTAINER_NAME}
+#  Running directly from the web:     wget -O - https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/${CONTAINER_NAME}/flare-install.sh | /usr/bin/env bash -s ${CONTAINER_NAME}
 
 YQ_URL=https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 YQ=/usr/bin/yq
 
 CONFIG="flare-config.yml"
 HOST_SCRIPT="flare-host.sh"
-MAIN_SCRIPT="main.sh"
+COMMONS_SCRIPT="commons.sh"
 DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
 
 CONTAINER_NAME=${1}
-CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/${CONTAINER_NAME}/flare-config.yml
-HOST_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/flare-host.sh
-MAIN_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/main.sh
+CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/${CONTAINER_NAME}/${CONFIG}
+HOST_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/${HOST_SCRIPT}
+COMMONS_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/${COMMONS_SCRIPT}
 
 # Bypass sudo Command for root
 sudo ()
