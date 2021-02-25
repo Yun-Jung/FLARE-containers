@@ -12,6 +12,6 @@ RUN R -e "remotes::install_github('FLARE-forecast/rNOMADS')" && \
 # Copy Files to Container
 RUN mkdir -p /root/flare/rscripts/
 COPY flare-container.sh /root/flare/
-RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/main.sh
+RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/commons.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
 COPY rscripts/launch_download_downscale.R /root/flare/rscripts/
