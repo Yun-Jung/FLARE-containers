@@ -23,7 +23,7 @@ container:
 ## Container Paths
 flare_path: /root/flare
 flare_shared_path: /root/flare/shared
-read_from_path: /root/flare/shared/flare-download-noaa
+read_from_path: /root/flare/shared/flare-download-noaa # Path to the downloaded NOAA files. To directly download from NOMADS server, leave the path blank.
 ## Parameters
 downscale: TRUE
 run_parallel: TRUE
@@ -33,5 +33,5 @@ forecast_date: .na
 forecast_time: .na
 lake_name_code: fcre
 lake_name: Falling Creek Reservoir
-lake_latitude: 37.303153   #Degrees North
-lake_longitude: 79.837217  #Degrees West
+lake_latitude: 37.307 # Degrees North
+lake_longitude: 79.837 # Degrees West
