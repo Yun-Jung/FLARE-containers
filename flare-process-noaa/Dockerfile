@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install Dependencies
 RUN R -e "remotes::install_github('FLARE-forecast/rNOMADS')" && \
-        R -e "remotes::install_github('vahid-dan/noaaGEFSpoint')" && \
+  R -e "remotes::install_github('vahid-dan/noaaGEFSpoint')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 
 # Copy Files to Container
