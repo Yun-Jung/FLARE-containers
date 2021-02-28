@@ -16,7 +16,7 @@ RUN apt-get -yq update && \
 	vim  \
 	libnetcdf-dev && \
 	R -e "install.packages(c('yaml', 'remotes', 'imputeTS', 'rMR'), repos = 'https://cloud.r-project.org')" && \
-	R -e "remotes::install_github('rqthomas/noaaGEFSpoint@c3ab33cbfab141b49cf52b415c0a1a0fe07d275e')" && \
+	R -e "remotes::install_github('FLARE-forecast/noaaGEFSpoint@fc08f6272da5b7bdeec3b764050e490482d27240')" && \
 	wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64
 
 	# Copy Files to Container
