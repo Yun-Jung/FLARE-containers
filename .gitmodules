@@ -1,0 +1,9 @@
+[submodule "flare-visualize/flare_lake_examples"]
+	path = flare-visualize/flare_lake_examples
+	url = git@github.com:FLARE-forecast/flare_lake_examples.git
+[submodule "flare-generate-forecast/flare_lake_examples"]
+	path = flare-generate-forecast/flare_lake_examples
+	url = git@github.com:FLARE-forecast/flare_lake_examples.git
+[submodule "flare-process-observations/flare_lake_examples"]
+	path = flare-process-observations/flare_lake_examples
+	url = git@github.com:FLARE-forecast/flare_lake_examples.git
