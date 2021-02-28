@@ -16,7 +16,7 @@ config = {
     "LogFileName": "noaa_downloads.log",
     "MaxLogFileBytes": 1<<20,
     "BackupCount": 5,
-    "MaxAttempts": 3
+    "MaxAttempts": 7
 }
 
 def SetupLogging():
@@ -167,6 +167,7 @@ class QueuedDownloader():
         except Exception as err0:
             self._logger.info("Exhausted %i attempts for %s", entry.attempts, entry.url)
             self._failed.append(entry)
+            os.remove(entry.local_filename)
         except pycurl.error as err:
             log_msg = "Download error occurred:\n{0}".format(err)
             self._logger.warning(log_msg)
@@ -176,6 +177,7 @@ class QueuedDownloader():
             else:
                 self._logger.info("Exhausted %i attempts for %s", entry.attempts, entry.url)
                 self._failed.append(entry)
+                os.remove(entry.local_filename)
 
     def WaitUntilJobsComplete(self):
         self._download_queue.join()
