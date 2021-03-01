@@ -1,0 +1,25 @@
+### Configuration File for CIBR-FLARE Project
+## General Settings
+git:
+  remote:
+    server: github.com
+    branch: master
+    ssh-key-private:
+    user-name: Yun-Jung
+    user-email: rebecca86420@gmail.com
+## Container Settings
+container:
+  name: flare-download-noaa
+  working-directory:
+    pre-run-pull: FALSE
+    post-run-push: FALSE
+    git:
+      remote:
+        server: 192.168.20.20
+        port:
+        repository: FLARE-forecast/test-data
+        branch: master
+        directory:
+
+## Parameters
+number_of_days: 4

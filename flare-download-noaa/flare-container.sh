@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # This file:
 #
-#  - Runs FLARE container from the host.
+#  - Runs the service inside FLARE container.
 #
 # Usage:
 #
-#  LOG_LEVEL=7 ./flare-host.sh -d
+#  LOG_LEVEL=7 ./flare-container.sh -d
 #
 # Based on a template by BASH3 Boilerplate v2.3.0
 # http://bash3boilerplate.sh/#authors
@@ -38,18 +38,19 @@ EOF
 
 # shellcheck disable=SC2034
 read -r -d '' __helptext <<-'EOF' || true # exits non-zero when EOF encountered
-  'flare-host' script for '${CONTAINER_NAME}' container
+  'flare-container' script for '${CONTAINER_NAME}' container
 EOF
 
-# shellcheck source=commons.sh
+# shellcheck source=main.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/commons.sh"
-
+source "/root/flare/shared/${CONTAINER_NAME}/flare-config.yml"
 
 ### Signal trapping and backtracing
 ##############################################################################
 
 function __b3bp_cleanup_before_exit () {
-  info "Done Cleaning Up Host"
+  rm -rf /root/.ssh
+  info "Done Cleaning Up Container"
 }
 trap __b3bp_cleanup_before_exit EXIT
 
@@ -101,11 +102,33 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-CONTAINER_NAME=$(basename ${__dir})
-GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
+#RSCRIPT="launch_download_downscale.R"
+PYSCRIPT="QueuedDownloader.py"
+CONTAINER_NAME=${1}
+GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
+GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
+GIT_REMOTE_SSHKEYPRIVATE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.ssh-key-private)
 
-cp -u ${GIT_REMOTE_SSHKEYPRIVATE} ${DIRECTORY_HOST_SHARED}/${CONTAINER_NAME}
+# Extract Private SSH Key File Name from Full Path
+GIT_REMOTE_SSHKEYPRIVATE_FILE=$(awk -F/ '{print $NF}' <<< ${GIT_REMOTE_SSHKEYPRIVATE})
 
-# Run Container Script in Manual or OpenWhisk Mode
-([[ "${arg_o:?}" = "1" ]] && cp -r ${DIRECTORY_HOST_SHARED} ${DIRECTORY_CONTAINER_SHARED} && ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT} ${CONTAINER_NAME}) \
-  || docker run -v ${DIRECTORY_HOST_SHARED}:${DIRECTORY_CONTAINER_SHARED} ${CONTAINER_NAME} ${DIRECTORY_CONTAINER}/${CONTAINER_SCRIPT} ${CONTAINER_NAME}
+# Setup SSH
+mkdir -p /root/.ssh
+cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE_FILE} /root/.ssh/id_rsa
+
+# Setup Git
+git config --global user.name ${GIT_REMOTE_USERNAME}
+git config --global user.email ${GIT_REMOTE_USEREMAIL}
+
+# Run R Script
+# Pass `${CONTAINER_NAME}` Argument to the R Script
+#Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
+
+# Run Python Script
+echo "${number_of_days}"
+for i in {0..${number_of_days}}
+do
+  PYDATE=$(date --date="-${i} day" +%Y%m%d)
+  echo "${PYDATE}"
+  python3 ${DIRECTORY_CONTAINER}/${PYSCRIPT_DIRECTORY}/${PYSCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
+done
