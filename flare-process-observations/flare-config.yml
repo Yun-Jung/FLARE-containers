@@ -23,8 +23,8 @@ container:
 ## Container Paths
 flare_path: /root/flare
 flare_shared_path: /root/flare/shared
-qaqc_data_location: /root/flare/shared/flare-process-observations/fcre-processed-data
-data_location: /root/flare/shared/flare-download-data
+qaqc_data_location: /root/flare/shared/flare-process-observations/fcre-processed-observations
+data_location: /root/flare/shared/flare-download-observations
 lakes_directory: flare_lake_examples
 
 ##########################
