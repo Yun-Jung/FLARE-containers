@@ -122,3 +122,68 @@ git config --global user.email ${GIT_REMOTE_USEREMAIL}
 # Run R Script
 # Pass `${CONTAINER_NAME}` Argument to the R Script
 Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
+
+### Trigger Openwhisk and delete useless data
+###############################################################################
+# Create Date Variables
+NOT_DELETE_DATE3=$(date --date="-3 day" +%Y-%m-%d)
+NOT_DELETE_DATE2=$(date --date="-2 day" +%Y-%m-%d)
+NOT_DELETE_DATE1=$(date --date="-1 day" +%Y-%m-%d)
+TODAY_DATE=$(date +%Y-%m-%d)
+END_DATE=$(date --date="+16 day" +%Y-%m-%d)
+
+# Create Path Variables
+FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
+FOLDER_00=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/00
+FOLDER_06=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/06
+FOLDER_12=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/12
+FOLDER_18=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/18
+
+TRIGGER_FILE=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/trigger.txt
+WRITE_TRIGGER=true
+
+# Create Openwhisk Variables
+APIHOST="js-129-114-104-10.jetstream-cloud.org"
+AUTH="d4558532-f53c-44cb-a4a0-3090cfd63880:fr7A1LGN1cA47u14Z37FVhIYLG7Z9pJLJwTM0Csn9bIL2DUvGFRF1NKpd9eXuqhQ"
+
+if [ ! -f "$TRIGGER_FILE" ]; then
+    info "Not triggered."
+    if [ -d "${FOLDER_00}" -a -d "${FOLDER_06}" -a -d "${FOLDER_12}" -a -d "${FOLDER_18}" ]; then
+        info "All Folders exist."
+        for time in 00 06 12 18
+        do
+          info "Start to check files in ${time} folders"
+          for i in {0..9}
+          do
+            FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens0${i}.nc
+            if [ ! -f "${FILE}" ]; then
+              info "$FILE does not exist."
+              WRITE_TRIGGER=false
+              break
+            fi
+          done
+          for i in {10..30}
+          do
+            FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens${i}.nc
+            if [ ! -f "${FILE}" ]; then
+              info "$FILE does not exist."
+              WRITE_TRIGGER=false
+              break
+            fi
+          done
+        done
+        if [ "${WRITE_TRIGGER}" = true ] ; then
+          echo "Triggered" > ${FOLDER}/trigger.txt
+          curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
+          info "Trigger Openwhisk"
+        fi
+    fi
+fi
+
+# Delete folders we don't need.
+cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
+info "Start to delete Folders"
+shopt -s extglob
+rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
+shopt -u extglob
+info "Completed"
