@@ -183,5 +183,7 @@ fi
 # Delete folders we don't need.
 cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
 info "Start to delete Folders"
+shopt -s extglob
 rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
+shopt -u extglob
 info "Completed"
