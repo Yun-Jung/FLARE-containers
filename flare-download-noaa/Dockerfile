@@ -13,4 +13,4 @@ RUN mkdir -p /root/flare/pyscripts/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/main.sh https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/commons/commons.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-RUN wget -P /root/flare/pyscripts/QueuedDownloader.py https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/flare-download-noaa/QueuedDownloader.py
+COPY /pyscripts/QueuedDownloader.py /root/flare/pyscripts
