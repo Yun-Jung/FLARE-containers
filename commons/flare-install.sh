@@ -18,9 +18,12 @@ DIRECTORY_HOST="/opt/flare"
 DIRECTORY_HOST_SHARED="/opt/flare/shared"
 
 CONTAINER_NAME=${1}
-CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/${CONTAINER_NAME}/${CONFIG}
-HOST_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/${HOST_SCRIPT}
-COMMONS_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/${COMMONS_SCRIPT}
+#CONFIG_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/${CONTAINER_NAME}/${CONFIG}
+CONFIG_URL=https://raw.githubusercontent.com/Yun-Jung/FLARE-containers/master/${CONTAINER_NAME}/${CONFIG}
+#HOST_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/${HOST_SCRIPT}
+HOST_SCRIPT_URL=https://raw.githubusercontent.com/Yun-Jung/FLARE-containers/master/commons/${HOST_SCRIPT}
+#COMMONS_SCRIPT_URL=https://raw.githubusercontent.com/FLARE-forecast/FLARE-containers/master/commons/${COMMONS_SCRIPT}
+COMMONS_SCRIPT_URL=https://raw.githubusercontent.com/Yun-Jung/FLARE-containers/master/commons/${COMMONS_SCRIPT}
 
 # Bypass sudo Command for root
 sudo ()
