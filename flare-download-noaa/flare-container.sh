@@ -125,5 +125,41 @@ NUMBER_OF_DAYS=4
 for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
 do
   PYDATE=$(date --date="-${i} day" +%Y%m%d)
+  info "Start to download ${PYDATE} data"
   python3 ${DIRECTORY_CONTAINER}/${PYSCRIPT_DIRECTORY}/${PYSCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
 done
+
+# Check data has been download sucessfully and trigger flare-process-noaa
+TODAY_DATE=$(date +%Y%m%d)
+TRIGGER=true
+FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
+for time in 00 06 12
+do
+  info "Start to check files in ${time} folders"
+  for name in tmp2m pressfc rh2m dlwrfsfc dswrfsfc apcpsfc ugrd10m vgrd10m
+  do
+    COMPLETED_CHECK=false
+    FILE=${FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
+    # Check if file is exist.
+    if [ ! -f "${FILE}" ]; then
+      info "$FILE does not exist."
+      TRIGGER=false
+      break
+    fi
+    # Check if file is completed.
+    while IFS= read -r line
+    do
+      if [ $line = "lon, [1]" ];then
+        COMPLETED_CHECK=true
+      fi
+    done < "$FILE"
+    if [[ "${COMPLETED_CHECK}" = false ]];then
+      info "${FILE} is not completed."
+      break
+    fi
+  done
+done
+if [ ${TRIGGER} = true ]; then
+  info "Trigger flare-process-noaa"
+  #Trigger flare-process-noaa
+fi
