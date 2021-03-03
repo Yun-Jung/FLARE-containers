@@ -120,15 +120,10 @@ cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE
 git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
-# Run R Script
-# Pass `${CONTAINER_NAME}` Argument to the R Script
-#Rscript ${DIRECTORY_CONTAINER}/${RSCRIPTS_DIRECTORY}/${RSCRIPT} ${CONTAINER_NAME}
-
 # Run Python Script
-echo "${number_of_days}"
-for i in {0..${number_of_days}}
+NUMBER_OF_DAYS=4
+for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
 do
   PYDATE=$(date --date="-${i} day" +%Y%m%d)
-  echo "${PYDATE}"
   python3 ${DIRECTORY_CONTAINER}/${PYSCRIPT_DIRECTORY}/${PYSCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
 done

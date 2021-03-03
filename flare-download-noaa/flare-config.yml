@@ -20,6 +20,3 @@ container:
         repository: FLARE-forecast/test-data
         branch: master
         directory:
-
-## Parameters
-number_of_days: 4
