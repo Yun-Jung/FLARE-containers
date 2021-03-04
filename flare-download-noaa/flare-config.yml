@@ -5,8 +5,8 @@ git:
     server: github.com
     branch: master
     ssh-key-private:
-    user-name: Yun-Jung
-    user-email: rebecca86420@gmail.com
+    user-name: 
+    user-email: 
 ## Container Settings
 container:
   name: flare-download-noaa
