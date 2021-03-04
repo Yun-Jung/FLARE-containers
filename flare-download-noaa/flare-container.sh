@@ -121,7 +121,7 @@ git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
 # Run Python Script
-NUMBER_OF_DAYS=4
+NUMBER_OF_DAYS=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} number-of-days)
 for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
 do
   PYDATE=$(date --date="-${i} day" +%Y%m%d)

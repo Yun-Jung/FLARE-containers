@@ -130,16 +130,18 @@ NOT_DELETE_DATE3=$(date --date="-3 day" +%Y-%m-%d)
 NOT_DELETE_DATE2=$(date --date="-2 day" +%Y-%m-%d)
 NOT_DELETE_DATE1=$(date --date="-1 day" +%Y-%m-%d)
 TODAY_DATE=$(date +%Y-%m-%d)
-END_DATE=$(date --date="+16 day" +%Y-%m-%d)
+
 
 # Create Path Variables
-FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
-FOLDER_00=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/00
-FOLDER_06=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/06
-FOLDER_12=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/12
-FOLDER_18=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/18
+FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre
+TODAY_FOLDER=${FOLDER}/${TODAY_DATE}
+YESTERDAY_FOLDER=${FOLDER}/${NOT_DELETE_DATE1}
+FOLDER_00=${TODAY_FOLDER}/00
+FOLDER_06=${TODAY_FOLDER}/06
+FOLDER_12=${TODAY_FOLDER}/12
+FOLDER_18=${YESTERDAY_FOLDER}/18
 
-TRIGGER_FILE=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}/trigger.txt
+TRIGGER_FILE=${TODAY_FOLDER}/trigger.txt
 WRITE_TRIGGER=true
 
 # Create Openwhisk Variables
@@ -153,18 +155,26 @@ if [ ! -f "$TRIGGER_FILE" ]; then
         for time in 00 06 12 18
         do
           info "Start to check files in ${time} folders"
-          for i in {0..9}
+          # Select the date is going to be checked
+          if [[ $time = "18"]];then
+          CHECK_DATE=${NOT_DELETE_DATE1}
+          CHECK_FOLDER=${YESTERDAY_FOLDER}
+          END_DATE=$(date --date="+15 day" +%Y-%m-%d)
+          else
+          CHECK_DATE=${TODAY_DATE}
+          CHECK_FOLDER=${TODAY_FOLDER}
+          END_DATE=$(date --date="+16 day" +%Y-%m-%d)
+          fi
+          for i in {0..30}
           do
-            FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens0${i}.nc
-            if [ ! -f "${FILE}" ]; then
-              info "$FILE does not exist."
-              WRITE_TRIGGER=false
-              break
+            # Create the path is going to be checked
+            if (( $i < 10 ));then
+              FILE=${CHECK_FOLDER}/${time}/NOAAGEFS_6hr_fcre_${CHECK_DATE}T${time}_${END_DATE}T${time}_ens0${i}.nc
+            else
+              FILE=${CHECK_FOLDER}/${time}/NOAAGEFS_6hr_fcre_${CHECK_DATE}T${time}_${END_DATE}T${time}_ens${i}.nc
             fi
-          done
-          for i in {10..30}
-          do
-            FILE=${FOLDER}/${time}/NOAAGEFS_6hr_fcre_${TODAY_DATE}T${time}_${END_DATE}T${time}_ens${i}.nc
+            info "Start to check $FILE"
+            # Check if the file is exist.
             if [ ! -f "${FILE}" ]; then
               info "$FILE does not exist."
               WRITE_TRIGGER=false
@@ -173,7 +183,7 @@ if [ ! -f "$TRIGGER_FILE" ]; then
           done
         done
         if [ "${WRITE_TRIGGER}" = true ] ; then
-          echo "Triggered" > ${FOLDER}/trigger.txt
+          echo "Triggered" > ${TODAY_FOLDER}/trigger.txt
           curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
           info "Trigger Openwhisk"
         fi
