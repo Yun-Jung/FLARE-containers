@@ -120,6 +120,10 @@ cp -u ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${GIT_REMOTE_SSHKEYPRIVATE
 git config --global user.name ${GIT_REMOTE_USERNAME}
 git config --global user.email ${GIT_REMOTE_USEREMAIL}
 
+# Create Openwhisk Variables
+APIHOST="js-129-114-104-10.jetstream-cloud.org"
+AUTH="d4558532-f53c-44cb-a4a0-3090cfd63880:fr7A1LGN1cA47u14Z37FVhIYLG7Z9pJLJwTM0Csn9bIL2DUvGFRF1NKpd9eXuqhQ"
+
 # Run Python Script
 NUMBER_OF_DAYS=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} number-of-days)
 for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
@@ -162,4 +166,5 @@ done
 if [ ${TRIGGER} = true ]; then
   info "Trigger flare-process-noaa"
   #Trigger flare-process-noaa
+  curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
 fi

@@ -184,7 +184,7 @@ if [ ! -f "$TRIGGER_FILE" ]; then
         done
         if [ "${WRITE_TRIGGER}" = true ] ; then
           echo "Triggered" > ${TODAY_FOLDER}/trigger.txt
-          curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
+          curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-noaa-ready-fcre -X POST -H "Content-Type: application/json"
           info "Trigger Openwhisk"
         fi
     fi
