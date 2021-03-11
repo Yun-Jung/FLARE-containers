@@ -166,12 +166,12 @@ do
 done
 
 # Check if it has triggered, if not trigger flare-process-noaa
-TRIGGER_FILE=${TODAY_FOLDER}/trigger.txt
+TRIGGER_FILE=${FOLDER}/trigger.txt
 if [ ${TRIGGER} = true ]; then
   if [ ! -f "$TRIGGER_FILE" ]; then
     info "Trigger flare-process-noaa"
     #Trigger flare-process-noaa
-    echo "Triggered" > ${TODAY_FOLDER}/trigger.txt
+    echo "Triggered" > ${FOLDER}/trigger.txt
     curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
   fi
 fi
