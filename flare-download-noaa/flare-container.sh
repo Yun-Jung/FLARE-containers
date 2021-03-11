@@ -134,6 +134,7 @@ do
 done
 
 # Check data has been download sucessfully and trigger flare-process-noaa
+## To do: check if it needs to run pyscipts again
 TODAY_DATE=$(date +%Y%m%d)
 TRIGGER=true
 FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
@@ -170,6 +171,7 @@ if [ ${TRIGGER} = true ]; then
   if [ ! -f "$TRIGGER_FILE" ]; then
     info "Trigger flare-process-noaa"
     #Trigger flare-process-noaa
+    echo "Triggered" > ${TODAY_FOLDER}/trigger.txt
     curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
   fi
 fi
