@@ -130,21 +130,30 @@ for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
 do
   PYDATE=$(date --date="-${i} day" +%Y%m%d)
   info "Start to download ${PYDATE} data"
-  python3 ${DIRECTORY_CONTAINER}/${PYSCRIPT_DIRECTORY}/${PYSCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
+  python3 ${DIRECTORY_CONTAINER}/${PYSCRIPTS_DIRECTORY}/${PYSCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
 done
 
 # Check data has been download sucessfully and trigger flare-process-noaa
 ## To do: check if it needs to run pyscipts again
 TODAY_DATE=$(date +%Y%m%d)
+NOT_DELETE_DATE3=$(date --date="-3 day" +%Y%m%d)
+NOT_DELETE_DATE2=$(date --date="-2 day" +%Y%m%d)
+NOT_DELETE_DATE1=$(date --date="-1 day" +%Y%m%d)
+
 TRIGGER=true
 FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
-for time in 00 06 12
+YESTERDAY_FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${NOT_DELETE_DATE1}
+for time in 00 06 12 18
 do
   info "Start to check files in ${time} folders"
   for name in tmp2m pressfc rh2m dlwrfsfc dswrfsfc apcpsfc ugrd10m vgrd10m
   do
     COMPLETED_CHECK=false
-    FILE=${FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
+    if [[ $time = "18"]];then
+      FILE=${YESTERDAY_FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
+    else
+      FILE=${FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
+    fi
     # Check if file is exist.
     if [ ! -f "${FILE}" ]; then
       info "$FILE does not exist."
@@ -177,9 +186,6 @@ if [ ${TRIGGER} = true ]; then
 fi
 
 # Delete folders we don't need.
-NOT_DELETE_DATE3=$(date --date="-3 day" +%Y%m%d)
-NOT_DELETE_DATE2=$(date --date="-2 day" +%Y%m%d)
-NOT_DELETE_DATE1=$(date --date="-1 day" +%Y%m%d)
 
 cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
 info "Start to delete Folders"
