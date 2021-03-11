@@ -163,8 +163,25 @@ do
     fi
   done
 done
+
+# Check if it has triggered, if not trigger flare-process-noaa
+TRIGGER_FILE=${TODAY_FOLDER}/trigger.txt
 if [ ${TRIGGER} = true ]; then
-  info "Trigger flare-process-noaa"
-  #Trigger flare-process-noaa
-  curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
+  if [ ! -f "$TRIGGER_FILE" ]; then
+    info "Trigger flare-process-noaa"
+    #Trigger flare-process-noaa
+    curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
+  fi
 fi
+
+# Delete folders we don't need.
+NOT_DELETE_DATE3=$(date --date="-3 day" +%Y%m%d)
+NOT_DELETE_DATE2=$(date --date="-2 day" +%Y%m%d)
+NOT_DELETE_DATE1=$(date --date="-1 day" +%Y%m%d)
+
+cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
+info "Start to delete Folders"
+shopt -s extglob
+rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
+shopt -u extglob
+info "Completed"
