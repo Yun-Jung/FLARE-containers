@@ -209,7 +209,7 @@ class QueuedDownloader():
             return 0
         else:
             self._logger.info("%i items failed to download\n%s", len(self._failed), str(self._failed))
-            return 1
+            return 0
 
 def main():
     if len(sys.argv) != 5:
