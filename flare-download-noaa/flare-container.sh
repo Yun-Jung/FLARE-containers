@@ -149,7 +149,7 @@ do
   for name in tmp2m pressfc rh2m dlwrfsfc dswrfsfc apcpsfc ugrd10m vgrd10m
   do
     COMPLETED_CHECK=false
-    if [[ $time = "18"]];then
+    if [[ $time = "18" ]];then
       FILE=${YESTERDAY_FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
     else
       FILE=${FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]

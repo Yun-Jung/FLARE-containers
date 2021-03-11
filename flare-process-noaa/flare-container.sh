@@ -156,7 +156,7 @@ if [ ! -f "$TRIGGER_FILE" ]; then
         do
           info "Start to check files in ${time} folders"
           # Select the date is going to be checked
-          if [[ $time = "18"]];then
+          if [[ $time = "18" ]];then
           CHECK_DATE=${NOT_DELETE_DATE1}
           CHECK_FOLDER=${YESTERDAY_FOLDER}
           END_DATE=$(date --date="+15 day" +%Y-%m-%d)
