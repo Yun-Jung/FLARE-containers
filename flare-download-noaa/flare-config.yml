@@ -10,6 +10,7 @@ git:
 ## Container Settings
 container:
   name: flare-download-noaa
+  version: latest
   working-directory:
     pre-run-pull: FALSE
     post-run-push: FALSE
