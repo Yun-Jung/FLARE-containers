@@ -43,7 +43,7 @@ EOF
 
 # shellcheck source=main.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/commons.sh"
-source "/root/flare/shared/${CONTAINER_NAME}/flare-config.yml"
+
 
 ### Signal trapping and backtracing
 ##############################################################################
