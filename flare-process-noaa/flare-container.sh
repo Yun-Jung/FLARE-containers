@@ -148,9 +148,9 @@ WRITE_TRIGGER=true
 APIHOST="js-129-114-104-10.jetstream-cloud.org"
 AUTH="d4558532-f53c-44cb-a4a0-3090cfd63880:fr7A1LGN1cA47u14Z37FVhIYLG7Z9pJLJwTM0Csn9bIL2DUvGFRF1NKpd9eXuqhQ"
 
-if [ ! -f "$TRIGGER_FILE" ]; then
+if [[ ! -f "$TRIGGER_FILE" ]]; then
     info "Not triggered."
-    if [ -d "${FOLDER_00}" -a -d "${FOLDER_06}" -a -d "${FOLDER_12}" -a -d "${FOLDER_18}" ]; then
+    if [[ -d "${FOLDER_00}" -a -d "${FOLDER_06}" -a -d "${FOLDER_12}" -a -d "${FOLDER_18}" ]]; then
         info "All Folders exist."
         for time in 00 06 12 18
         do
@@ -175,14 +175,14 @@ if [ ! -f "$TRIGGER_FILE" ]; then
             fi
             info "Start to check $FILE"
             # Check if the file is exist.
-            if [ ! -f "${FILE}" ]; then
+            if [[ ! -f "${FILE}" ]]; then
               info "$FILE does not exist."
               WRITE_TRIGGER=false
               break
             fi
           done
         done
-        if [ "${WRITE_TRIGGER}" = true ] ; then
+        if [[ "${WRITE_TRIGGER}" = true ]] ; then
           echo "Triggered" > ${TODAY_FOLDER}/trigger.txt
           curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-noaa-ready-fcre -X POST -H "Content-Type: application/json"
           info "Trigger Openwhisk"

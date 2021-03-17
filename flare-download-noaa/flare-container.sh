@@ -155,7 +155,7 @@ do
       FILE=${FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
     fi
     # Check if file is exist.
-    if [ ! -f "${FILE}" ]; then
+    if [[ ! -f "${FILE}" ]]; then
       info "$FILE does not exist."
       TRIGGER=false
       break
@@ -163,7 +163,7 @@ do
     # Check if file is completed.
     while IFS= read -r line
     do
-      if [ $line = "lon, [1]" ];then
+      if [[ $line = "lon, [1]" ]];then
         COMPLETED_CHECK=true
       fi
     done < "$FILE"
@@ -176,8 +176,8 @@ done
 
 # Check if it has triggered, if not trigger flare-process-noaa
 TRIGGER_FILE=${FOLDER}/trigger.txt
-if [ ${TRIGGER} = true ]; then
-  if [ ! -f "$TRIGGER_FILE" ]; then
+if [[ ${TRIGGER} = true ]]; then
+  if [[ ! -f "$TRIGGER_FILE" ]]; then
     info "Trigger flare-process-noaa"
     #Trigger flare-process-noaa
     echo "Triggered" > ${FOLDER}/trigger.txt
