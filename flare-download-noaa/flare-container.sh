@@ -102,8 +102,7 @@ fi
 ### User-defined and Runtime
 ##############################################################################
 
-#RSCRIPT="launch_download_downscale.R"
-PYSCRIPT="QueuedDownloader.py"
+SCRIPT="QueuedDownloader.py"
 CONTAINER_NAME=${1}
 GIT_REMOTE_USERNAME=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-name)
 GIT_REMOTE_USEREMAIL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} git.remote.user-email)
@@ -130,7 +129,7 @@ for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
 do
   PYDATE=$(date --date="-${i} day" +%Y%m%d)
   info "Start to download ${PYDATE} data"
-  python3 ${DIRECTORY_CONTAINER}/${PYSCRIPTS_DIRECTORY}/${PYSCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
+  python3 ${DIRECTORY_CONTAINER}/${SCRIPTS_DIRECTORY}/${SCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
 done
 
 # Check data has been download sucessfully and trigger flare-process-noaa
