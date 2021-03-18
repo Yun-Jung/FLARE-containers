@@ -141,7 +141,7 @@ FOLDER_06=${TODAY_FOLDER}/06
 FOLDER_12=${TODAY_FOLDER}/12
 FOLDER_18=${YESTERDAY_FOLDER}/18
 
-TRIGGER_FILE=${TODAY_FOLDER}/trigger.txt
+TRIGGER_FILE=${FOLDER}/${TODAY_DATE}.trg
 WRITE_TRIGGER=true
 
 # Create Openwhisk Variables
@@ -183,7 +183,7 @@ if [[ ! -f "$TRIGGER_FILE" ]]; then
           done
         done
         if [[ "${WRITE_TRIGGER}" = true ]] ; then
-          echo "Triggered" > ${TODAY_FOLDER}/trigger.txt
+          echo "Triggered" > ${FOLDER}/${TODAY_DATE}.trg
           curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-noaa-ready-fcre -X POST -H "Content-Type: application/json"
           info "Trigger Openwhisk"
         fi
