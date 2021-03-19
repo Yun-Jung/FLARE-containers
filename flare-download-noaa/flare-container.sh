@@ -144,15 +144,18 @@ FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY
 YESTERDAY_FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${NOT_DELETE_DATE1}
 for time in 00 06 12 18
 do
-  info "Start to check files in ${time} folders"
+  if [[ $time = "18" ]];then
+    CHECK_FOLDER=${YESTERDAY_FOLDER}
+    info "Start to check files in ${NOT_DELETE_DATE1}/${time} folders"
+  else
+    CHECK_FOLDER=${FOLDER}
+    info "Start to check files in ${TODAY_DATE}/${time} folders"
+  fi
+
   for name in tmp2m pressfc rh2m dlwrfsfc dswrfsfc apcpsfc ugrd10m vgrd10m
   do
     COMPLETED_CHECK=false
-    if [[ $time = "18" ]];then
-      FILE=${YESTERDAY_FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
-    else
-      FILE=${FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
-    fi
+    FILE=${CHECK_FOLDER}/gefs_pgrb2ap5_all_${time}z.ascii?${name}[0:30][0:64][255][160]
     # Check if file is exist.
     if [[ ! -f "${FILE}" ]]; then
       info "$FILE does not exist."
@@ -174,12 +177,12 @@ do
 done
 
 # Check if it has triggered, if not trigger flare-process-noaa
-TRIGGER_FILE=${FOLDER}/trigger.txt
+TRIGGER_FILE=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}.trg
 if [[ ${TRIGGER} = true ]]; then
   if [[ ! -f "$TRIGGER_FILE" ]]; then
     info "Trigger flare-process-noaa"
     #Trigger flare-process-noaa
-    echo "Triggered" > ${FOLDER}/trigger.txt
+    echo "Triggered" > ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}.trg
     curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
   fi
 fi

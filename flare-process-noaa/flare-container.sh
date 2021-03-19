@@ -154,7 +154,6 @@ if [[ ! -f "$TRIGGER_FILE" ]]; then
         info "All Folders exist."
         for time in 00 06 12 18
         do
-          info "Start to check files in ${time} folders"
           # Select the date is going to be checked
           if [[ $time = "18" ]];then
           CHECK_DATE=${NOT_DELETE_DATE1}
@@ -165,6 +164,7 @@ if [[ ! -f "$TRIGGER_FILE" ]]; then
           CHECK_FOLDER=${TODAY_FOLDER}
           END_DATE=$(date --date="+16 day" +%Y-%m-%d)
           fi
+          info "Start to check files in ${CHECK_DATE}/${time} folders"
           for i in {0..30}
           do
             # Create the path is going to be checked
