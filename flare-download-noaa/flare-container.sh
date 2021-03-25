@@ -146,10 +146,10 @@ for time in 00 06 12 18
 do
   if [[ $time = "18" ]];then
     CHECK_FOLDER=${YESTERDAY_FOLDER}
-    info "Start to check files in ${NOT_DELETE_DATE1}/${time} folders"
+    info "Start to check time:${time} files in ${NOT_DELETE_DATE1} folder"
   else
     CHECK_FOLDER=${FOLDER}
-    info "Start to check files in ${TODAY_DATE}/${time} folders"
+    info "Start to check time:${time} files in ${TODAY_DATE} folder"
   fi
 
   for name in tmp2m pressfc rh2m dlwrfsfc dswrfsfc apcpsfc ugrd10m vgrd10m
