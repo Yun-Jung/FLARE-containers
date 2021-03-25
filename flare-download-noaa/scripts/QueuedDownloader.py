@@ -12,7 +12,8 @@ import certifi
 from io import BytesIO
 import yaml
 
-with open('/root/flare/shared/flare-download-noaa/flare-config.yml', 'r') as f:
+container_name = str(sys.argv[1]).split("/")[4]
+with open('/root/flare/shared/'+ container_name +'/flare-config.yml', 'r') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
 def SetupLogging():
