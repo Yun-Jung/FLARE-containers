@@ -355,7 +355,7 @@ DIRECTORY_HOST_SHARED="/opt/flare/shared"
 DIRECTORY_CONTAINER="/root/flare"
 DIRECTORY_CONTAINER_SHARED="/root/flare/shared"
 RSCRIPTS_DIRECTORY="rscripts"
-SCRIPTS_DIRECTORY="pyscripts"
+SCRIPTS_DIRECTORY="scripts"
 
 # Check If the Directory Is the Expected Git Repository
 function is_right_git_dir () {
