@@ -12,7 +12,7 @@ import certifi
 from io import BytesIO
 import yaml
 
-with open('shared/flare-download-noaa/flare-config.yml', 'r') as f:
+with open('/root/flare/shared/flare-download-noaa/flare-config.yml', 'r') as f:
     config_yml = yaml.load(f, Loader=yaml.FullLoader)
 
 config = {
