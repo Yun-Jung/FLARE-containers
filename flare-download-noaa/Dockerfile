@@ -13,4 +13,4 @@ RUN mkdir -p /root/flare/pyscripts/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/commons.sh https://raw.githubusercontent.com/Yun-Jung/FLARE-containers/master/commons/commons.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-COPY /pyscripts/QueuedDownloader.py /root/flare/pyscripts
+COPY /pyscripts/QueuedDownloader.py /root/flare/scripts
