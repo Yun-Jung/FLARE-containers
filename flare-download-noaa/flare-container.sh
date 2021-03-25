@@ -182,7 +182,7 @@ if [[ ${TRIGGER} = true ]]; then
   if [[ ! -f "$TRIGGER_FILE" ]]; then
     info "Trigger flare-process-noaa"
     #Trigger flare-process-noaa
-    echo "Triggered" > ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}.trg
+    echo "Triggered" 2>&1 | tee -a ${FOLDER}/${TODAY_DATE}.trg
     curl -u ${AUTH} https://${APIHOST}/api/v1/namespaces/_/triggers/flare-download-noaa-ready-fcre -X POST -H "Content-Type: application/json"
   fi
 fi
@@ -191,7 +191,7 @@ fi
 
 cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
 info "Start to delete Folders"
-shopt -s extglob
-rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}")
-shopt -u extglob
+shopt -s extglob dotglob
+rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}"|*.trg)
+shopt -u extglob dotglob
 info "Completed"

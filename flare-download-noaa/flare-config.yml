@@ -5,8 +5,8 @@ git:
     server: github.com
     branch: master
     ssh-key-private:
-    user-name: 
-    user-email: 
+    user-name:
+    user-email:
 ## Container Settings
 container:
   name: flare-download-noaa
@@ -24,3 +24,9 @@ container:
 
 ## Parameters
 number-of-days: 4
+LogDirectory: "./"
+LogFileName: "noaa_downloads.log"
+MaxLogFileBytes: 1<<20
+BackupCount: 5
+MaxAttempts: 7
+LoggerMode: INFO

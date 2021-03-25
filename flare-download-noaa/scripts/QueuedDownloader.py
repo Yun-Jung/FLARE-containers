@@ -10,18 +10,30 @@ import logging.handlers as lh
 import pycurl
 import certifi
 from io import BytesIO
+import yaml
+
+with open('shared/flare-download-noaa/flare-config.yml', 'r') as f:
+    config_yml = yaml.load(f)
+
+# LogDirectory = config["LogDirectory"]
+# LogFileName = config["LogFileName"]
+# MaxLogFileBytes = config["MaxLogFileBytes"]
+# BackupCount = config["BackupCount"]
+# MaxAttempts = config["MaxAttempts"]
+# LoggerMode = config["LoggerMode"]
 
 config = {
-    "LogDirectory": "./",
-    "LogFileName": "noaa_downloads.log",
-    "MaxLogFileBytes": 1<<20,
-    "BackupCount": 5,
-    "MaxAttempts": 7
+    "LogDirectory": config_yml["LogDirectory"],
+    "LogFileName": config_yml["LogFileName"],
+    "MaxLogFileBytes": config_yml["MaxLogFileBytes"],
+    "BackupCount": config_yml["BackupCount"],
+    "MaxAttempts": config_yml["MaxAttempts"],
+    "LoggerMode": config_yml["LoggerMode"]
 }
 
 def SetupLogging():
     logger = logging.getLogger("Console & File Logger")
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(getattr(logging,config["LoggerMode"]))
 
     #Console Logger
     console_handler = logging.StreamHandler()
@@ -41,7 +53,7 @@ def SetupLogging():
 
     #File Logger
     # Creates rotating filehandler
-    file_handler = lh.RotatingFileHandler(filename=fqname, maxBytes=config["MaxLogFileBytes"],
+    file_handler = lh.RotatingFileHandler(filename=fqname, maxBytes=eval(config["MaxLogFileBytes"]),
                                         backupCount=config["BackupCount"])
     file_log_formatter = logging.Formatter(
         "[%(asctime)s.%(msecs)03d] %(levelname)s:%(message)s", datefmt="%Y%m%d %H:%M:%S")
