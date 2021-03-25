@@ -22,8 +22,13 @@ container:
         branch: master
         directory:
 
-## Parameters
+## Parameters flare-container.sh
 number-of-days: 4
+noaa_model: NOAAGEFS_6hr
+lake_name_code: fcre
+lake_name: Falling Creek Reservoir
+
+## Parameters for QueuedDownloader.py
 LogDirectory: "./"
 LogFileName: "noaa_downloads.log"
 MaxLogFileBytes: 1<<20

@@ -125,11 +125,13 @@ AUTH="d4558532-f53c-44cb-a4a0-3090cfd63880:fr7A1LGN1cA47u14Z37FVhIYLG7Z9pJLJwTM0
 
 # Run Python Script
 NUMBER_OF_DAYS=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} number-of-days)
+NOAA_MODEL=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} noaa_model)
+LAKE_NAME_CODE=$(yq r ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${CONFIG_FILE} lake_name_code)
 for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
 do
   PYDATE=$(date --date="-${i} day" +%Y%m%d)
   info "Start to download ${PYDATE} data"
-  python3 ${DIRECTORY_CONTAINER}/${SCRIPTS_DIRECTORY}/${SCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre ${PYDATE} 255 160
+  python3 ${DIRECTORY_CONTAINER}/${SCRIPTS_DIRECTORY}/${SCRIPT} ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${NOAA_MODEL}/${LAKE_NAME_CODE} ${PYDATE} 255 160
 done
 
 # Check data has been download sucessfully and trigger flare-process-noaa
@@ -140,8 +142,8 @@ NOT_DELETE_DATE2=$(date --date="-2 day" +%Y%m%d)
 NOT_DELETE_DATE1=$(date --date="-1 day" +%Y%m%d)
 
 TRIGGER=true
-FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}
-YESTERDAY_FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${NOT_DELETE_DATE1}
+FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${NOAA_MODEL}/${LAKE_NAME_CODE}/${TODAY_DATE}
+YESTERDAY_FOLDER=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${NOAA_MODEL}/${LAKE_NAME_CODE}/${NOT_DELETE_DATE1}
 for time in 00 06 12 18
 do
   if [[ $time = "18" ]];then
@@ -177,7 +179,7 @@ do
 done
 
 # Check if it has triggered, if not trigger flare-process-noaa
-TRIGGER_FILE=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/${TODAY_DATE}.trg
+TRIGGER_FILE=${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${NOAA_MODEL}/${LAKE_NAME_CODE}/${TODAY_DATE}.trg
 if [[ ${TRIGGER} = true ]]; then
   if [[ ! -f "$TRIGGER_FILE" ]]; then
     info "Trigger flare-process-noaa"
@@ -189,7 +191,7 @@ fi
 
 # Delete folders we don't need.
 
-cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/NOAAGEFS_6hr/fcre/
+cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${NOAA_MODEL}/${LAKE_NAME_CODE}/
 info "Start to delete Folders"
 shopt -s extglob dotglob
 rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}"|*.trg)
