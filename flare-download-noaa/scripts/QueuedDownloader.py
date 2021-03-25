@@ -13,14 +13,7 @@ from io import BytesIO
 import yaml
 
 with open('shared/flare-download-noaa/flare-config.yml', 'r') as f:
-    config_yml = yaml.load(f)
-
-# LogDirectory = config["LogDirectory"]
-# LogFileName = config["LogFileName"]
-# MaxLogFileBytes = config["MaxLogFileBytes"]
-# BackupCount = config["BackupCount"]
-# MaxAttempts = config["MaxAttempts"]
-# LoggerMode = config["LoggerMode"]
+    config_yml = yaml.load(f, Loader=yaml.FullLoader)
 
 config = {
     "LogDirectory": config_yml["LogDirectory"],
