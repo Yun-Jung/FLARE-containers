@@ -9,8 +9,8 @@ RUN wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/3.4.1/
 RUN pip3 install pycurl certifi PyYAML
 
 # Copy Files to Container
-RUN mkdir -p /root/flare/pyscripts/
+RUN mkdir -p /root/flare/scripts/
 COPY flare-container.sh /root/flare/
 RUN wget -O /root/flare/commons.sh https://raw.githubusercontent.com/Yun-Jung/FLARE-containers/master/commons/commons.sh
 RUN chmod +x /usr/bin/yq /root/flare/flare-container.sh
-COPY /pyscripts/QueuedDownloader.py /root/flare/pyscripts
+COPY /scripts/QueuedDownloader.py /root/flare/scripts
