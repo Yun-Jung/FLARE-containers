@@ -194,6 +194,12 @@ fi
 cd ${DIRECTORY_CONTAINER_SHARED}/${CONTAINER_NAME}/${NOAA_MODEL}/${LAKE_NAME_CODE}/
 info "Start to delete Folders"
 shopt -s extglob dotglob
-rm -rf !("${TODAY_DATE}"|"${NOT_DELETE_DATE1}"|"${NOT_DELETE_DATE2}"|"${NOT_DELETE_DATE3}"|*.trg)
+for (( i=$NUMBER_OF_DAYS-1; i>=0; i-- ))
+do
+  NOT_DELETE_DATE=$(date --date="-${i} day" +%Y%m%d)
+  NOT_DELETE_LIST+="${NOT_DELETE_DATE}|"
+done
+NOT_DELETE_LIST+="*.trg"
+rm -rf !($NOT_DELETE_LIST)
 shopt -u extglob dotglob
 info "Completed"
